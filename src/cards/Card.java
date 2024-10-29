@@ -1,16 +1,15 @@
-package main;
+package cards;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
-public class Card {
+abstract public class Card {
     final public int health;
     final public int mana;
     final public int attackDamage;
     final public String description;
     final public ArrayList<String> colors;
     final public String name;
+    final public CardType type;
 
     public Card(int health, int mana, int attackDamage, String description, ArrayList<String> colors, String name) {
         this.health = health;
@@ -19,6 +18,29 @@ public class Card {
         this.description = description;
         this.colors = colors;
         this.name = name;
+
+        switch (name) {
+            case "Sentinel":
+            case "Berserker":
+            case "The Ripper":
+            case "Miraj":
+                type = CardType.OFFENSIVE;
+                break;
+            case "Goliath":
+            case "Warden":
+            case "Disciple":
+            case "The Cursed One":
+                type = CardType.DEFENSIVE;
+                break;
+            case "Lord Royce":
+            case "Empress Thorina":
+            case "King Mudface":
+            case "General Kocioraw":
+                type = CardType.HERO;
+                break;
+            default:
+                throw new RuntimeException("Invalid card.");
+        }
     }
 
     public Card(Card card) {
@@ -28,18 +50,6 @@ public class Card {
         this.description = card.description;
         this.colors = card.colors;
         this.name = card.name;
-    }
-
-    public static ArrayList<Card> cloneDeck(ArrayList<Card> cardList) {
-        ArrayList<Card> clonedList = new ArrayList<Card>(cardList.size());
-        for (Card card : cardList) {
-            clonedList.add(new Card(card));
-        }
-        return clonedList;
-    }
-
-    public static ArrayList<Card> shuffleDeck(ArrayList<Card> cardList, int seed) {
-        Collections.shuffle(cardList, new Random(seed));
-        return cardList;
+        this.type = card.type;
     }
 }

@@ -4,6 +4,7 @@ import checker.Checker;
 
 import checker.CheckerConstants;
 import fileio.IOHandler;
+import game.Session;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +67,7 @@ public final class Main {
         Session gwentstoneSession = new Session(IOHandler.getInstance().getInputData().getPlayerOneDecks(),
                 IOHandler.getInstance().getInputData().getPlayerTwoDecks(),
                 IOHandler.getInstance().getInputData().getGames());
-
+        gwentstoneSession.beginSession();
         IOHandler.getInstance().handleOutput();
     }
 }
