@@ -12,6 +12,8 @@ public class Entity {
     @Getter
     @Setter
     protected int attackDamage;
+    @Getter
+    @Setter
     protected boolean canAct = true;
     final public Card card;
 

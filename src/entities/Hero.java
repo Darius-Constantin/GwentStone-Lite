@@ -13,7 +13,7 @@ public class Hero extends Entity {
     @Getter
     private ArrayList<MinionCard> inHandCards;
     @Getter
-    private int mana;
+    private int mana = 0;
     final public int playerIdx;
 
     public Hero(Card hero, ArrayList<MinionCard> deck, Game currentGame, int playerIdx) {
@@ -29,5 +29,17 @@ public class Hero extends Entity {
         if (availableCards.isEmpty())
             return;
         inHandCards.add(availableCards.remove(0));
+    }
+
+    public MinionCard removeCard(int idx) {
+        if (inHandCards.isEmpty() || idx >= inHandCards.size())
+            return null;
+        return inHandCards.remove(idx);
+    }
+
+    public MinionCard getCard(int idx) {
+        if (inHandCards.isEmpty() || idx >= inHandCards.size())
+            return null;
+        return inHandCards.get(idx);
     }
 }

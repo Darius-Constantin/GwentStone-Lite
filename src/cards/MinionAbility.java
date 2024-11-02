@@ -1,16 +1,12 @@
 package cards;
 
 import entities.Minion;
-import lombok.Getter;
+import lombok.Setter;
 
-@Getter
 public enum MinionAbility {
     MINION((Minion caster, Minion target) -> {}),
     WEAKKNEES((Minion caster, Minion target) -> {
-        if (target.getAttackDamage() > 2)
-            target.setAttackDamage(target.getAttackDamage() - 2);
-        else
-            target.setAttackDamage(0);
+        target.setAttackDamage(Math.max(target.getAttackDamage() - 2, 0));
     }),
     SKYJACK((Minion caster, Minion target) -> {
         int targetHealth = target.getHealth();
@@ -18,11 +14,11 @@ public enum MinionAbility {
         caster.setHealth(targetHealth);
     }),
     SHAPESHIFT((Minion caster, Minion target) -> {
+        if (target.getAttackDamage() == 0)
+            target.kill();
         int targetHealth = target.getHealth();
         target.setHealth(target.getAttackDamage());
         target.setAttackDamage(targetHealth);
-        if (target.getHealth() == 0)
-            target.kill();
     }),
     GODSPLAN((Minion caster, Minion target) -> {
         target.setHealth(target.getHealth() + 2);
@@ -34,4 +30,5 @@ public enum MinionAbility {
 
     private final Ability ability;
     MinionAbility(Ability ability) { this.ability = ability; }
+    public void useAbility(Minion caster, Minion target) { ability.ability(caster, target); }
 }

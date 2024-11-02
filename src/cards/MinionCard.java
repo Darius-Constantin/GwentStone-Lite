@@ -31,7 +31,6 @@ public class MinionCard extends Card {
             case "The Cursed One":
                 ability = MinionAbility.SHAPESHIFT;
                 break;
-
             default:
                 throw new RuntimeException("Invalid card.");
         }
@@ -53,5 +52,9 @@ public class MinionCard extends Card {
     public static ArrayList<MinionCard> shuffleDeck(ArrayList<MinionCard> cardList, int seed) {
         Collections.shuffle(cardList, new Random(seed));
         return cardList;
+    }
+
+    public String toString() {
+        return "[CARD] " + this.name + ": HP = " + this.health + " - MANA = " + this.mana;
     }
 }

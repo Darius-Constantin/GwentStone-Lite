@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public enum HeroAbility {
     SUBZERO((Minion[] row) -> {
+        System.out.println("Subzero!!!!!!!");
         for (int i = 0; i < Game.tableWidth; i++) {
             if (row[i] == null)
                 break;
@@ -38,7 +39,7 @@ public enum HeroAbility {
         for (int i = 0; i < Game.tableWidth; i++) {
             if (row[i] == null)
                 break;
-            row[i].setAttackDamage(row[i].getHealth() + 1);
+            row[i].setAttackDamage(row[i].getAttackDamage() + 1);
         }
     });
 
@@ -46,6 +47,7 @@ public enum HeroAbility {
         void ability(Minion[] row);
     }
 
-    final private Ability ability;
+    private final Ability ability;
     HeroAbility(Ability ability) { this.ability = ability; }
+    public void useAbility(Minion[] row) { ability.ability(row); }
 }

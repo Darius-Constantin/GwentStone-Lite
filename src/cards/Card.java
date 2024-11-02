@@ -22,15 +22,19 @@ abstract public class Card {
         switch (name) {
             case "Sentinel":
             case "Berserker":
-            case "The Ripper":
-            case "Miraj":
-                type = CardType.OFFENSIVE;
+                type = CardType.GENERIC;
                 break;
             case "Goliath":
             case "Warden":
+                type = CardType.TAUNT;
+                break;
             case "Disciple":
             case "The Cursed One":
-                type = CardType.DEFENSIVE;
+                type = CardType.SPECIAL_BACKLINE;
+                break;
+            case "The Ripper":
+            case "Miraj":
+                type = CardType.SPECIAL_FRONTLINE;
                 break;
             case "Lord Royce":
             case "Empress Thorina":

@@ -1,6 +1,7 @@
 package entities;
 
 import cards.Card;
+import cards.MinionCard;
 import game.Game;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,11 @@ public class Minion extends Entity {
         this.y = y;
     }
 
-    public void dealDamage(int damage, Entity target) {
-        target.takeDamage(damage);
+    public void dealDamage(Entity target) {
+        target.takeDamage(getAttackDamage());
+    }
+
+    public String toString() {
+        return "[MINION] " + card.name + " HP = " + health + " MANA = " + card.mana + " ATK = " + attackDamage;
     }
 }

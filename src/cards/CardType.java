@@ -1,7 +1,9 @@
 package cards;
 
 public enum CardType {
-    DEFENSIVE,
-    OFFENSIVE,
+    GENERIC,
+    TAUNT,
+    SPECIAL_FRONTLINE,
+    SPECIAL_BACKLINE,
     HERO,
 }

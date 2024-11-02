@@ -44,6 +44,8 @@ public final class Main {
         Files.createDirectories(path);
 
         for (File file : Objects.requireNonNull(directory.listFiles())) {
+            //if (!file.getName().equalsIgnoreCase("test14_multiple_games_valid.json"))
+            //    continue;
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();

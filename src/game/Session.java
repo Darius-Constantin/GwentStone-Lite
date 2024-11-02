@@ -15,13 +15,15 @@ import java.util.ArrayList;
 public class Session {
     private final Player[] players = new Player[2];
     private Game game;
-    @Setter
-    @Getter
-    private int noWinsPlayer1 = 0;
-    @Setter
-    @Getter
-    private int noWinsPlayer2 = 0;
     private final ArrayList<GameInput> games;
+
+    public void addPlayerWin(int playerIdx) {
+        players[playerIdx].addWin();
+    }
+
+    public int getPlayerWins(int playerIdx) {
+        return players[playerIdx].getNoOfWins();
+    }
 
     public Session(DecksInput inputPlayer1Decks, DecksInput inputPlayer2Decks, ArrayList<GameInput> games) {
         ArrayList<ArrayList<MinionCard>> player1Decks = new ArrayList<ArrayList<MinionCard>>();
