@@ -1,6 +1,5 @@
 package fileio;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -10,7 +9,6 @@ import lombok.Getter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class IOHandler {
     private static IOHandler instance;
@@ -40,6 +38,30 @@ public class IOHandler {
         if (instance == null)
             throw new RuntimeException("IOHandler not initialized.");
         return instance;
+    }
+
+    public ObjectNode createObjectNodeFromObject(Object obj) throws IllegalAccessException {
+        System.out.println("CREATE OBJECT");
+        ObjectNode node = objectMapper.createObjectNode();
+        if (obj instanceof SerializeHandler s) {
+            ArrayList<SerializableField> fields = s.getSerializableFields();
+            for (SerializableField serializableField : fields) {
+                System.out.println(serializableField.label);
+                node.put(serializableField.label, objectMapper.valueToTree(serializableField.value));
+            }
+        }
+        return node;
+    }
+
+    public void writeObjectNodeToObject(String name, ObjectNode node) {
+        objectNodes.get(0).put(name, node);
+    }
+
+    public ArrayNode createArrayNodeFromArrayOfObjects(ArrayList<Object> array) throws IllegalAccessException {
+        ArrayNode node = objectMapper.createArrayNode();
+        for (Object obj : array)
+            node.add(createObjectNodeFromObject(obj));
+        return node;
     }
 
     public void handleInput() throws IOException {

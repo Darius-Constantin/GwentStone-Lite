@@ -21,7 +21,7 @@ public final class Test {
      * @param args input files
      * @throws IOException in case of exceptions to reading / writing
      */
-    public static void main(final String[] args) throws IOException {
+    public static void main(final String[] args) throws IOException, NoSuchFieldException, IllegalAccessException {
         File directory = new File(CheckerConstants.TESTS_PATH);
         File[] inputDir = directory.listFiles();
 

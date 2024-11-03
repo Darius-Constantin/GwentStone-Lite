@@ -3,9 +3,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 7,
     "health" : 6,
+    "mana" : 1,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -15,9 +15,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 7,
     "health" : 3,
+    "mana" : 1,
     "description" : "Standard card: Trained by the best, nothing will catch him off-guard.",
     "colors" : [ "Black", "Grey", "Blue" ],
     "name" : "Sentinel"

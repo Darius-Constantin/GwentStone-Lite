@@ -1,17 +1,22 @@
 package entities;
 
 import cards.Card;
+import fileio.SerializableField;
+import fileio.SerializeField;
+import fileio.SerializeHandler;
 import game.Game;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Entity {
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
+public class Entity implements SerializeHandler {
     @Getter
     @Setter
+    @SerializeField(label = "health")
     protected int health;
-    @Getter
-    @Setter
-    protected int attackDamage;
+
     @Getter
     @Setter
     protected boolean canAct = true;
@@ -23,7 +28,6 @@ public class Entity {
     public Entity(Card card, Game currentGame, int ownerPlayerIdx) {
         this.card = card;
         this.health = card.health;
-        this.attackDamage = card.attackDamage;
         this.currentGame = currentGame;
         this.ownerPlayerIdx = ownerPlayerIdx;
     }
@@ -36,5 +40,12 @@ public class Entity {
         this.health -= damage;
         if (this.health <= 0)
             kill();
+    }
+
+    @Override
+    public ArrayList<SerializableField> getSerializableFields() throws IllegalAccessException {
+        ArrayList<SerializableField> fields = SerializeHandler.super.getSerializableFields();
+        fields.addAll(card.getSerializableFields());
+        return fields;
     }
 }

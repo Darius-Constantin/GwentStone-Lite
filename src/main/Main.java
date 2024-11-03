@@ -30,7 +30,7 @@ public final class Main {
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */
-    public static void main(final String[] args) throws IOException {
+    public static void main(final String[] args) throws IOException, IllegalAccessException {
         File directory = new File(CheckerConstants.TESTS_PATH);
         Path path = Paths.get(CheckerConstants.RESULT_PATH);
 
@@ -44,7 +44,7 @@ public final class Main {
         Files.createDirectories(path);
 
         for (File file : Objects.requireNonNull(directory.listFiles())) {
-            //if (!file.getName().equalsIgnoreCase("test14_multiple_games_valid.json"))
+            //if (!file.getName().equalsIgnoreCase("test05_attack_card_invalid.json"))
             //    continue;
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
@@ -63,7 +63,7 @@ public final class Main {
      * @throws IOException in case of exceptions to reading / writing
      */
     public static void action(final String filePath1,
-                              final String filePath2) throws IOException {
+                              final String filePath2) throws IOException, IllegalAccessException {
         IOHandler.instantiateIOHandler(CheckerConstants.TESTS_PATH + filePath1, filePath2);
         IOHandler.getInstance().handleInput();
         Session gwentstoneSession = new Session(IOHandler.getInstance().getInputData().getPlayerOneDecks(),

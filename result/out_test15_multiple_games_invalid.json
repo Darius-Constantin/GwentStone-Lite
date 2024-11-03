@@ -13,9 +13,9 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 4,
     "health" : 3,
+    "mana" : 1,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Brown", "Black", "Grey" ],
     "name" : "Goliath"
@@ -43,9 +43,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 6,
     "health" : 3,
+    "mana" : 1,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
@@ -65,9 +65,9 @@
   "x" : 3,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 5,
     "health" : 2,
+    "mana" : 1,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "Grey", "Blue" ],
     "name" : "Sentinel"
@@ -84,9 +84,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 6,
     "health" : 3,
+    "mana" : 1,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
@@ -106,9 +106,9 @@
   "x" : 3,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 5,
     "health" : 2,
+    "mana" : 1,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "Grey", "Blue" ],
     "name" : "Sentinel"
@@ -118,9 +118,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 6,
     "health" : 3,
+    "mana" : 1,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
@@ -169,9 +169,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 6,
     "health" : 3,
+    "mana" : 1,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
@@ -191,9 +191,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 5,
     "health" : 4,
+    "mana" : 2,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
@@ -319,9 +319,9 @@
   "x" : 3,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 4,
+    "mana" : 1,
     "description" : "Premium card: The will of Gods has been spoken, obey and you shall be saved...or not.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -337,9 +337,9 @@
   "x" : 3,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 4,
+    "mana" : 1,
     "description" : "Premium card: The will of Gods has been spoken, obey and you shall be saved...or not.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -359,9 +359,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 3,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -381,9 +381,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 3,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -411,9 +411,9 @@
   "x" : 3,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 4,
+    "mana" : 1,
     "description" : "Premium card: The will of Gods has been spoken, obey and you shall be saved...or not.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -433,9 +433,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 4,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -456,9 +456,9 @@
   "x" : 3,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 4,
+    "mana" : 1,
     "description" : "Premium card: The will of Gods has been spoken, obey and you shall be saved...or not.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -468,9 +468,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 4,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -492,9 +492,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 7,
     "health" : 5,
+    "mana" : 1,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -521,9 +521,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 5,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -550,9 +550,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 5,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -573,9 +573,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 7,
     "health" : 7,
+    "mana" : 1,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -599,9 +599,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 7,
     "health" : 9,
+    "mana" : 1,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -629,9 +629,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 5,
+    "mana" : 1,
     "description" : "Standard card: Thrown from the highest cliff, revenge will be his glory.",
     "colors" : [ "Pink", "Purple" ],
     "name" : "The Cursed One"
@@ -652,9 +652,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 7,
     "health" : 3,
+    "mana" : 1,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -684,9 +684,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 5,
+    "mana" : 1,
     "description" : "Standard card: Thrown from the highest cliff, revenge will be his glory.",
     "colors" : [ "Pink", "Purple" ],
     "name" : "The Cursed One"
@@ -702,9 +702,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 6,
     "health" : 3,
+    "mana" : 2,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Black", "Yellow" ],
     "name" : "The Ripper"
@@ -717,9 +717,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 6,
+    "mana" : 1,
     "description" : "Standard card: Thrown from the highest cliff, revenge will be his glory.",
     "colors" : [ "Pink", "Purple" ],
     "name" : "The Cursed One"

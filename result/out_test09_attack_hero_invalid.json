@@ -17,9 +17,9 @@
   "x" : 3,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 5,
     "health" : 2,
+    "mana" : 1,
     "description" : "Standard card: Trained by the best, nothing will catch him off-guard.",
     "colors" : [ "Black", "Grey", "Blue" ],
     "name" : "Sentinel"
@@ -67,9 +67,9 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 4,
     "health" : 8,
+    "mana" : 1,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Red", "Purple" ],
     "name" : "Goliath"

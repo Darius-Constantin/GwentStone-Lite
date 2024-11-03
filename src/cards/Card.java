@@ -1,13 +1,23 @@
 package cards;
 
+import fileio.SerializableField;
+import fileio.SerializeField;
+import fileio.SerializeHandler;
+
+import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-abstract public class Card {
+abstract public class Card implements SerializeHandler {
     final public int health;
+    @SerializeField(label = "mana")
     final public int mana;
     final public int attackDamage;
+    @SerializeField(label = "description")
     final public String description;
+    @SerializeField(label = "colors")
     final public ArrayList<String> colors;
+    @SerializeField(label = "name")
     final public String name;
     final public CardType type;
 

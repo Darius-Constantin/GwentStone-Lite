@@ -1,24 +1,27 @@
 package entities;
 
 import cards.Card;
-import cards.MinionCard;
+import fileio.SerializableField;
+import fileio.SerializeField;
 import game.Game;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
+@Setter
+@Getter
 public class Minion extends Entity {
-    @Setter
-    @Getter
     private int x;
-    @Setter
-    @Getter
     private int y;
-    @Setter
-    @Getter
     private boolean frozen = false;
+    @SerializeField(label = "attackDamage")
+    protected int attackDamage;
 
     public Minion(Card card, int x, int y, Game currentGame, int playerIdx) {
         super(card, currentGame, playerIdx);
+        this.attackDamage = card.attackDamage;
         this.x = x;
         this.y = y;
     }
@@ -29,5 +32,17 @@ public class Minion extends Entity {
 
     public String toString() {
         return "[MINION] " + card.name + " HP = " + health + " MANA = " + card.mana + " ATK = " + attackDamage;
+    }
+
+    @Override
+    public ArrayList<SerializableField> getSerializableFields() throws IllegalAccessException {
+        ArrayList<SerializableField> fields = new ArrayList<>();
+        for (Field field : this.getClass().getDeclaredFields())
+            if (field.isAnnotationPresent(SerializeField.class))
+                fields.add(new SerializableField(field.getAnnotation(SerializeField.class).label(), field.get(this)));
+
+        ArrayList<SerializableField> superFields = super.getSerializableFields();
+        superFields.addAll(fields);
+        return superFields;
     }
 }

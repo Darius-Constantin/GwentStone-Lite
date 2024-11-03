@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Random;
 
 public class MinionCard extends Card {
-
     final public MinionAbility ability;
 
     public MinionCard(int health, int mana, int attackDamage, String description, ArrayList<String> colors, String name) {

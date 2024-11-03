@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 public enum HeroAbility {
     SUBZERO((Minion[] row) -> {
-        System.out.println("Subzero!!!!!!!");
         for (int i = 0; i < Game.tableWidth; i++) {
             if (row[i] == null)
                 break;

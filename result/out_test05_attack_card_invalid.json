@@ -8,9 +8,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 3,
     "attackDamage" : 3,
     "health" : 1,
+    "mana" : 3,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -78,9 +78,9 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "mana" : 3,
     "attackDamage" : 2,
     "health" : 2,
+    "mana" : 3,
     "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
     "colors" : [ "Brown", "Black", "Grey" ],
     "name" : "Goliath"

@@ -19,9 +19,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 4,
     "health" : 7,
+    "mana" : 2,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Red", "Purple" ],
     "name" : "Goliath"
@@ -55,9 +55,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 4,
     "health" : 7,
+    "mana" : 2,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Red", "Purple" ],
     "name" : "Goliath"
@@ -77,9 +77,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 4,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -102,9 +102,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 5,
     "health" : 7,
+    "mana" : 2,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Red", "Purple" ],
     "name" : "Goliath"
@@ -117,9 +117,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 5,
     "health" : 7,
+    "mana" : 2,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Red", "Purple" ],
     "name" : "Goliath"
@@ -132,9 +132,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 6,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -148,9 +148,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 4,
     "health" : 7,
+    "mana" : 2,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Red", "Purple" ],
     "name" : "Goliath"
@@ -170,9 +170,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 6,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -192,9 +192,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 6,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -240,9 +240,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 0,
     "health" : 8,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -402,9 +402,9 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 5,
     "health" : 4,
+    "mana" : 1,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
@@ -420,9 +420,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 5,
     "health" : 4,
+    "mana" : 2,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
     "name" : "Miraj"
@@ -438,9 +438,9 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 5,
     "health" : 4,
+    "mana" : 1,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
@@ -460,9 +460,9 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 3,
     "health" : 4,
+    "mana" : 1,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
@@ -481,9 +481,9 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 3,
     "health" : 4,
+    "mana" : 1,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
@@ -496,9 +496,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 3,
     "health" : 5,
+    "mana" : 2,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
     "name" : "Miraj"
@@ -514,9 +514,9 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 3,
     "health" : 6,
+    "mana" : 1,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
@@ -529,9 +529,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 3,
     "health" : 8,
+    "mana" : 2,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
     "name" : "Miraj"
@@ -581,9 +581,9 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 3,
     "health" : 8,
+    "mana" : 1,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
@@ -610,9 +610,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 3,
     "health" : 11,
+    "mana" : 2,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
     "name" : "Miraj"
@@ -622,9 +622,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 2,
     "health" : 1,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -634,9 +634,9 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 2,
     "attackDamage" : 3,
     "health" : 11,
+    "mana" : 2,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
     "name" : "Miraj"
@@ -656,9 +656,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 2,
     "health" : 3,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -688,9 +688,9 @@
   "x" : 0,
   "y" : 0,
   "output" : {
-    "mana" : 1,
     "attackDamage" : 2,
     "health" : 3,
+    "mana" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"

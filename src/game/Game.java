@@ -65,16 +65,15 @@ public class Game  {
         System.out.println();
     }
 
-    public void playGame() {
+    public void playGame() throws IllegalAccessException {
         for (int i = 0; i < 2; i++) {
             heroes[i].addMana(getCurrentTurn());
             heroes[i].drawCard();
         }
 
-        System.out.println("P0: " + heroes[0].getMana() + "\t\t\t" + "P1: " +heroes[1].getMana());
         for (ActionsInput action : actions) {
-            System.out.println("Current turn: " + getCurrentTurn() + "  ---  " + "Current player: " + getCurrentPlayerIdx());
-            System.out.println(action);
+            //System.out.println("Current turn: " + getCurrentTurn() + "  ---  " + "Current player: " + getCurrentPlayerIdx());
+            //System.out.println(action);
             switch(action.getCommand()) {
                 case "placeCard": {
                     if (isGameOver)
@@ -113,7 +112,7 @@ public class Game  {
                         break;
                     }
 
-                    System.out.println(cardToPlace);
+                    //System.out.println(cardToPlace);
                     Minion minion = new Minion(cardToPlace, x, y, this, getCurrentPlayerIdx());
                     heroes[getCurrentPlayerIdx()].addMana(-cardToPlace.mana);
                     playedCards[x][y] = minion;
@@ -652,19 +651,7 @@ public class Game  {
                     if (minion == null) {
                         IOHandler.getInstance().writeToObject("output", "No card available at that position.");
                     } else {
-                        IOHandler.getInstance().beginObject();
-                        IOHandler.getInstance().writeToObject("mana", minion.card.mana);
-                        IOHandler.getInstance().writeToObject("attackDamage", minion.getAttackDamage());
-                        IOHandler.getInstance().writeToObject("health", minion.getHealth());
-                        IOHandler.getInstance().writeToObject("description", minion.card.description);
-                        IOHandler.getInstance().beginArray();
-                        for (String color : minion.card.colors)
-                            IOHandler.getInstance().writeToArray(color);
-                        IOHandler.getInstance().writeArrayToObject("colors");
-                        IOHandler.getInstance().writeToObject("name", minion.card.name);
-                        IOHandler.getInstance().endArray();
-                        IOHandler.getInstance().writeObjectToObject("output");
-                        IOHandler.getInstance().endObject();
+                        IOHandler.getInstance().writeObjectNodeToObject("output", IOHandler.getInstance().createObjectNodeFromObject(minion));
                     }
                     IOHandler.getInstance().writeObjectToOutput();
                     IOHandler.getInstance().endObject();
@@ -732,15 +719,15 @@ public class Game  {
                     break;
             }
 
-            if (!action.getCommand().equals("getCardAtPosition") &&
-                    !action.getCommand().equals("getPlayerDeck") &&
-                    !action.getCommand().equals("cardUsesAttack") &&
-                    !action.getCommand().equals("cardUsesAbility") &&
-                    !action.getCommand().equals("useAttackHero") &&
-                    !action.getCommand().equals("getPlayerTurn") &&
-                    !action.getCommand().equals("getCardsOnTable") &&
-                    !action.getCommand().equals("getCardsInHand"))
-                System.out.println("P0: " + heroes[0].getMana() + "\t\t\t" + "P1: " +heroes[1].getMana());
+            //if (!action.getCommand().equals("getCardAtPosition") &&
+            //        !action.getCommand().equals("getPlayerDeck") &&
+            //        !action.getCommand().equals("cardUsesAttack") &&
+            //        !action.getCommand().equals("cardUsesAbility") &&
+            //        !action.getCommand().equals("useAttackHero") &&
+            //        !action.getCommand().equals("getPlayerTurn") &&
+            //        !action.getCommand().equals("getCardsOnTable") &&
+            //        !action.getCommand().equals("getCardsInHand"))
+            //    System.out.println("P0: " + heroes[0].getMana() + "\t\t\t" + "P1: " +heroes[1].getMana());
 
             //if (!action.getCommand().equals("getCardAtPosition") &&
             //        !action.getCommand().equals("endPlayerTurn") &&
@@ -751,7 +738,7 @@ public class Game  {
             //        !action.getCommand().equals("getCardsInHand"))
             //    debugTable();
             //System.out.println();
-            System.out.println();
+            //System.out.println();
         }
     }
 

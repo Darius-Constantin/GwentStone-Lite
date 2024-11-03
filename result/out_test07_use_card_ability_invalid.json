@@ -3,9 +3,9 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "mana" : 4,
     "attackDamage" : 5,
     "health" : 3,
+    "mana" : 4,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Yellow", "Orange", "Red" ],
     "name" : "Miraj"

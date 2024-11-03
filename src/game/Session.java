@@ -6,9 +6,6 @@ import cards.MinionCard;
 import fileio.CardInput;
 import fileio.GameInput;
 import fileio.DecksInput;
-import fileio.IOHandler;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 
@@ -54,7 +51,7 @@ public class Session {
         this.games = games;
     }
 
-    public void beginSession() {
+    public void beginSession() throws IllegalAccessException {
         for (GameInput gameInput : games) {
             CardInput tmpHero = gameInput.getStartGame().getPlayerOneHero();
             Card player1HeroCard = new HeroCard(tmpHero.getMana(), tmpHero.getAttackDamage(), tmpHero.getDescription(),
