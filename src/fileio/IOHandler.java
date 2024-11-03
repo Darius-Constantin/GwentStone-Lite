@@ -12,46 +12,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public final class IOHandler {
-    public static IOHandler instance;
-
-    private final String outPath;
-    private final String inPath;
+    // Singleton instance directly/publicly accessible to avoid a significant number of
+    // getInstance() calls, thus reducing overhead. To avoid instance reassignment, the field
+    // is declared "final" with empty parameters that must be manually set to avoid Runtime
+    // exceptions.
+    public static final IOHandler INSTANCE = new IOHandler();
 
     @Getter
     private Input inputData;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = new ObjectMapper();
     @Getter
-    private final ArrayNode output = objectMapper.createArrayNode();
+    private ArrayNode output = objectMapper.createArrayNode();
 
-    private final ArrayList<ObjectNode> objectNodes = new ArrayList<ObjectNode>();
-    private final ArrayList<ArrayNode> arrayNodes = new ArrayList<ArrayNode>();
-
-    private IOHandler(final String inPath,
-                      final String outPath) {
-        this.inPath = inPath;
-        this.outPath = outPath;
-    }
-
-    public static void instantiateIOHandler(final String inPath,
-                                            final String outPath) {
-        instance = new IOHandler(inPath, outPath);
-    }
-
-    //public static IOHandler getInstance() {
-    //    if (instance == null) {
-    //        throw new RuntimeException("IOHandler not initialized.");
-    //    }
-    //    return instance;
-    //}
+    private ArrayList<ObjectNode> objectNodes = new ArrayList<ObjectNode>();
+    private ArrayList<ArrayNode> arrayNodes = new ArrayList<ArrayNode>();
 
     public ObjectNode createObjectNodeFromObject(final Object obj) throws IllegalAccessException {
         ObjectNode node = objectMapper.createObjectNode();
         if (obj instanceof SerializeHandler s) {
             ArrayList<SerializableField> fields = s.getSerializableFields();
             for (SerializableField serializableField : fields) {
-                node.put(serializableField.getLabel(), objectMapper.valueToTree(serializableField.getValue()));
+                node.put(serializableField.getLabel(),
+                        objectMapper.valueToTree(serializableField.getValue()));
             }
-            System.out.println();
         }
         return node;
     }
@@ -61,11 +44,12 @@ public final class IOHandler {
         objectNodes.get(0).put(name, node);
     }
 
-    public <T> ArrayNode createArrayNodeFromArrayOfObjects(final ArrayList<T> array) throws IllegalAccessException {
+    public <T> ArrayNode createArrayNodeFromArray(final ArrayList<T> array)
+            throws IllegalAccessException {
         ArrayNode node = objectMapper.createArrayNode();
         for (Object obj : array) {
             if (obj instanceof ArrayList) {
-                node.add(createArrayNodeFromArrayOfObjects((ArrayList<?>) obj));
+                node.add(createArrayNodeFromArray((ArrayList<?>) obj));
             } else {
                 node.add(createObjectNodeFromObject(obj));
             }
@@ -73,13 +57,22 @@ public final class IOHandler {
         return node;
     }
 
-    public void handleInput() throws IOException {
+    public void resetInstance() {
+        objectMapper = new ObjectMapper();
+        output = objectMapper.createArrayNode();
+        objectNodes = new ArrayList<ObjectNode>();
+        arrayNodes = new ArrayList<ArrayNode>();
+    }
+
+    public void handleInput(final String inPath) throws IOException {
         inputData = objectMapper.readValue(new File(inPath), Input.class);
     }
 
-    public void handleOutput() throws IOException {
+    public void handleOutput(final String outPath) throws IOException {
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(outPath), output);
+
+        resetInstance();
     }
 
     public void beginObject() {

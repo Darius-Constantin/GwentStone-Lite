@@ -1,37 +1,18 @@
 package fileio;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 
+@Setter
+@Getter
 public final class Input {
     private DecksInput playerOneDecks;
     private DecksInput playerTwoDecks;
     private ArrayList<GameInput> games;
 
     public Input() {
-    }
-
-    public ArrayList<GameInput> getGames() {
-        return games;
-    }
-
-    public void setGames(final ArrayList<GameInput> games) {
-        this.games = games;
-    }
-
-    public DecksInput getPlayerOneDecks() {
-        return playerOneDecks;
-    }
-
-    public void setPlayerOneDecks(final DecksInput playerOneDecks) {
-        this.playerOneDecks = playerOneDecks;
-    }
-
-    public DecksInput getPlayerTwoDecks() {
-        return playerTwoDecks;
-    }
-
-    public void setPlayerTwoDecks(final DecksInput playerTwoDecks) {
-        this.playerTwoDecks = playerTwoDecks;
     }
 
     @Override

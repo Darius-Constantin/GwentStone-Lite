@@ -64,12 +64,11 @@ public final class Main {
      */
     public static void action(final String filePath1,
                               final String filePath2) throws IOException, IllegalAccessException {
-        IOHandler.instantiateIOHandler(CheckerConstants.TESTS_PATH + filePath1, filePath2);
-        IOHandler.getInstance().handleInput();
-        Session gwentstoneSession = new Session(IOHandler.getInstance().getInputData().getPlayerOneDecks(),
-                IOHandler.getInstance().getInputData().getPlayerTwoDecks(),
-                IOHandler.getInstance().getInputData().getGames());
-        gwentstoneSession.beginSession();
-        IOHandler.getInstance().handleOutput();
+        IOHandler.INSTANCE.handleInput(CheckerConstants.TESTS_PATH + filePath1);
+        Session session = new Session(IOHandler.INSTANCE.getInputData().getPlayerOneDecks(),
+                IOHandler.INSTANCE.getInputData().getPlayerTwoDecks(),
+                IOHandler.INSTANCE.getInputData().getGames());
+        session.beginSession();
+        IOHandler.INSTANCE.handleOutput(filePath2);
     }
 }

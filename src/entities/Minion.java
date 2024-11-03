@@ -25,7 +25,7 @@ public class Minion extends Entity {
                   final Game currentGame,
                   final int playerIdx) {
         super(card, currentGame, playerIdx);
-        this.attackDamage = card.attackDamage;
+        this.attackDamage = card.getAttackDamage();
         this.x = x;
         this.y = y;
     }
@@ -35,7 +35,10 @@ public class Minion extends Entity {
     }
 
     public String toString() {
-        return "[MINION] " + card.getName() + " HP = " + health + " MANA = " + card.getMana() + " ATK = " + attackDamage;
+        return "[MINION] " + getCard().getName()
+                + " HP = " + health
+                + " MANA = " + getCard().getMana()
+                + " ATK = " + attackDamage;
     }
 
     @Override
@@ -43,7 +46,8 @@ public class Minion extends Entity {
         ArrayList<SerializableField> fields = new ArrayList<>();
         for (Field field : this.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(SerializeField.class)) {
-                fields.add(new SerializableField(field.getAnnotation(SerializeField.class).label(), field.get(this)));
+                fields.add(new SerializableField(field.getAnnotation(SerializeField.class).label(),
+                        field.get(this)));
             }
         }
 

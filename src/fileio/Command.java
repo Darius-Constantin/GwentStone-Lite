@@ -25,7 +25,7 @@ public enum Command {
 
     private final String command;
     private final CommandType commandType;
-    private Command(final String command, final CommandType type) {
+    Command(final String command, final CommandType type) {
         this.command = command;
         this.commandType = type;
     }

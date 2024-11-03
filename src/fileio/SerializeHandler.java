@@ -18,11 +18,13 @@ public interface SerializeHandler {
 
     default ArrayList<SerializableField> getSerializableFields() throws IllegalAccessException {
         ArrayList<SerializableField> fields = new ArrayList<>();
-        ArrayList<Field> classFields = SerializeHandler.getAllFields(new ArrayList<>(), this.getClass());
+        ArrayList<Field> classFields = SerializeHandler.getAllFields(new ArrayList<>(),
+                this.getClass());
         for (Field field : classFields) {
             if (field.isAnnotationPresent(SerializeField.class)) {
                 field.setAccessible(true);
-                fields.add(new SerializableField(field.getAnnotation(SerializeField.class).label(), field.get(this)));
+                fields.add(new SerializableField(field.getAnnotation(SerializeField.class).label(),
+                        field.get(this)));
             }
         }
         return fields;

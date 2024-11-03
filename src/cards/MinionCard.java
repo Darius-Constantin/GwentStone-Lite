@@ -1,15 +1,18 @@
 package cards;
 
 import fileio.SerializeField;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
 public class MinionCard extends Card {
-    final public MinionAbility ability;
+    @Getter
+    private final MinionAbility ability;
+    @Getter
     @SerializeField(label = "attackDamage")
-    final public int attackDamage;
+    private final int attackDamage;
 
     public MinionCard(final int health,
                       final int mana,
@@ -57,12 +60,15 @@ public class MinionCard extends Card {
         return clonedList;
     }
 
-    public static ArrayList<MinionCard> shuffleDeck(final ArrayList<MinionCard> cardList, final int seed) {
+    public static ArrayList<MinionCard> shuffleDeck(final ArrayList<MinionCard> cardList,
+                                                    final int seed) {
         Collections.shuffle(cardList, new Random(seed));
         return cardList;
     }
 
     public String toString() {
-        return "[CARD] " + this.getName() + ": HP = " + this.getHealth() + " - MANA = " + this.getMana();
+        return "[CARD] " + this.getName()
+                + ": HP = " + this.getHealth()
+                + " - MANA = " + this.getMana();
     }
 }

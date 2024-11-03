@@ -24,8 +24,8 @@ public class Hero extends Entity {
         this.playerIdx = playerIdx;
     }
 
-    public void addMana(final int mana) {
-        this.mana += mana;
+    public void addMana(final int manaToAdd) {
+        this.mana += manaToAdd;
     }
 
     public void drawCard() {
@@ -49,9 +49,9 @@ public class Hero extends Entity {
         return inHandCards.get(idx);
     }
 
-    public void reset(int mana) {
+    public void reset(final int manaToAdd) {
         super.reset();
-        this.mana += mana;
+        this.mana += manaToAdd;
         drawCard();
     }
 }

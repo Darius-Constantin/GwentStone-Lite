@@ -19,10 +19,12 @@ public class Entity implements SerializeHandler {
     @Getter
     @Setter
     protected boolean canAct = true;
-    final public Card card;
+    @Getter
+    private final Card card;
 
-    final public Game currentGame;
-    final public int ownerPlayerIdx;
+    private final Game currentGame;
+    @Getter
+    private final int ownerPlayerIdx;
 
     public Entity(final Card card,
                   final Game currentGame,
@@ -48,7 +50,8 @@ public class Entity implements SerializeHandler {
     public ArrayList<SerializableField> getSerializableFields() throws IllegalAccessException {
         ArrayList<SerializableField> fields = SerializeHandler.super.getSerializableFields();
         ArrayList<SerializableField> cardFields = card.getSerializableFields();
-        cardFields.removeIf(field -> (field.getLabel().equals("attackDamage") || field.getLabel().equals("health")));
+        cardFields.removeIf(field -> (field.getLabel().equals("attackDamage")
+                || field.getLabel().equals("health")));
         fields.addAll(cardFields);
         return fields;
     }

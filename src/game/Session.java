@@ -65,7 +65,8 @@ public class Session {
             Card player2HeroCard = new HeroCard(tmpHero.getMana(), tmpHero.getDescription(),
                     tmpHero.getColors(), tmpHero.getName());
 
-            Game currentGame = new Game(this, gameInput.getStartGame().getShuffleSeed(),
+            Game currentGame = new Game(this,
+                    gameInput.getStartGame().getShuffleSeed(),
                     gameInput.getStartGame().getStartingPlayer() - 1,
                     players[0].getDecks().get(gameInput.getStartGame().getPlayerOneDeckIdx()),
                     players[1].getDecks().get(gameInput.getStartGame().getPlayerTwoDeckIdx()),
