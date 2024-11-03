@@ -1,28 +1,19 @@
 package fileio;
 
-public final class Coordinates {
-   private int x, y;
+import lombok.Getter;
+import lombok.Setter;
 
-   public Coordinates() {
-   }
+@Setter
+@Getter
+public final class Coordinates implements SerializeHandler {
+   @SerializeField(label = "x")
+   private int x;
+   @SerializeField(label = "y")
+   private int y;
 
-   public int getX() {
-      return x;
-   }
+   public Coordinates() { }
 
-   public void setX(final int x) {
-      this.x = x;
-   }
-
-   public int getY() {
-      return y;
-   }
-
-   public void setY(final int y) {
-      this.y = y;
-   }
-
-   @Override
+    @Override
    public String toString() {
       return "Coordinates{"
               + "x="

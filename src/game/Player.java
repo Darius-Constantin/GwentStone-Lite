@@ -1,27 +1,20 @@
 package game;
 
-import cards.Card;
 import cards.MinionCard;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 
+@Getter
 public class Player {
-    final private int noDecks;
-    final private int noCardsInDeck;
-    @Getter
-    final private ArrayList<ArrayList<MinionCard>> decks;
-    @Getter
+    private final ArrayList<ArrayList<MinionCard>> decks;
     private int noOfWins = 0;
 
     public void addWin() {
         noOfWins++;
     }
 
-    public Player(int noDecks, int noCardsInDeck, ArrayList<ArrayList<MinionCard>> decks) {
-        this.noDecks = noDecks;
-        this.noCardsInDeck = noCardsInDeck;
+    public Player(final ArrayList<ArrayList<MinionCard>> decks) {
         this.decks = decks;
     }
 

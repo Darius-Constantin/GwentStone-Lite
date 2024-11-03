@@ -44,7 +44,7 @@ public final class Main {
         Files.createDirectories(path);
 
         for (File file : Objects.requireNonNull(directory.listFiles())) {
-            //if (!file.getName().equalsIgnoreCase("test05_attack_card_invalid.json"))
+            //if (!file.getName().equalsIgnoreCase("test01_game_start.json"))
             //    continue;
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);

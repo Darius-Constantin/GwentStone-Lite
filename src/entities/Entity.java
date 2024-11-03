@@ -8,7 +8,6 @@ import game.Game;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class Entity implements SerializeHandler {
@@ -25,9 +24,11 @@ public class Entity implements SerializeHandler {
     final public Game currentGame;
     final public int ownerPlayerIdx;
 
-    public Entity(Card card, Game currentGame, int ownerPlayerIdx) {
+    public Entity(final Card card,
+                  final Game currentGame,
+                  final int ownerPlayerIdx) {
         this.card = card;
-        this.health = card.health;
+        this.health = card.getHealth();
         this.currentGame = currentGame;
         this.ownerPlayerIdx = ownerPlayerIdx;
     }
@@ -36,16 +37,23 @@ public class Entity implements SerializeHandler {
         currentGame.onEntityDeath(this);
     }
 
-    public void takeDamage(int damage) {
+    public void takeDamage(final int damage) {
         this.health -= damage;
-        if (this.health <= 0)
+        if (this.health <= 0) {
             kill();
+        }
     }
 
     @Override
     public ArrayList<SerializableField> getSerializableFields() throws IllegalAccessException {
         ArrayList<SerializableField> fields = SerializeHandler.super.getSerializableFields();
-        fields.addAll(card.getSerializableFields());
+        ArrayList<SerializableField> cardFields = card.getSerializableFields();
+        cardFields.removeIf(field -> (field.getLabel().equals("attackDamage") || field.getLabel().equals("health")));
+        fields.addAll(cardFields);
         return fields;
+    }
+
+    public void reset() {
+        this.canAct = true;
     }
 }

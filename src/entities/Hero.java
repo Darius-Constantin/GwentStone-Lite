@@ -7,39 +7,51 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 
+@Getter
 public class Hero extends Entity {
-    @Getter
-    private ArrayList<MinionCard> availableCards;
-    @Getter
-    private ArrayList<MinionCard> inHandCards;
-    @Getter
+    private final ArrayList<MinionCard> availableCards;
+    private final ArrayList<MinionCard> inHandCards;
     private int mana = 0;
-    final public int playerIdx;
+    private final int playerIdx;
 
-    public Hero(Card hero, ArrayList<MinionCard> deck, Game currentGame, int playerIdx) {
+    public Hero(final Card hero,
+                final ArrayList<MinionCard> deck,
+                final Game currentGame,
+                final int playerIdx) {
         super(hero, currentGame, playerIdx);
         this.availableCards = deck;
         this.inHandCards = new ArrayList<>(deck.size());
         this.playerIdx = playerIdx;
     }
 
-    public void addMana(int mana) { this.mana += mana; }
+    public void addMana(final int mana) {
+        this.mana += mana;
+    }
 
     public void drawCard() {
-        if (availableCards.isEmpty())
+        if (availableCards.isEmpty()) {
             return;
+        }
         inHandCards.add(availableCards.remove(0));
     }
 
-    public MinionCard removeCard(int idx) {
-        if (inHandCards.isEmpty() || idx >= inHandCards.size())
+    public MinionCard removeCard(final int idx) {
+        if (inHandCards.isEmpty() || idx >= inHandCards.size()) {
             return null;
+        }
         return inHandCards.remove(idx);
     }
 
-    public MinionCard getCard(int idx) {
-        if (inHandCards.isEmpty() || idx >= inHandCards.size())
+    public MinionCard getCard(final int idx) {
+        if (inHandCards.isEmpty() || idx >= inHandCards.size()) {
             return null;
+        }
         return inHandCards.get(idx);
+    }
+
+    public void reset(int mana) {
+        super.reset();
+        this.mana += mana;
+        drawCard();
     }
 }

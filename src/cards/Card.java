@@ -1,30 +1,32 @@
 package cards;
 
-import fileio.SerializableField;
 import fileio.SerializeField;
 import fileio.SerializeHandler;
+import lombok.Getter;
 
-import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-abstract public class Card implements SerializeHandler {
-    final public int health;
+@Getter
+public abstract class Card implements SerializeHandler {
+    @SerializeField(label = "health")
+    private final int health;
     @SerializeField(label = "mana")
-    final public int mana;
-    final public int attackDamage;
+    private final int mana;
     @SerializeField(label = "description")
-    final public String description;
+    private final String description;
     @SerializeField(label = "colors")
-    final public ArrayList<String> colors;
+    private final ArrayList<String> colors;
     @SerializeField(label = "name")
-    final public String name;
-    final public CardType type;
+    private final String name;
+    private final CardType type;
 
-    public Card(int health, int mana, int attackDamage, String description, ArrayList<String> colors, String name) {
+    public Card(final int health,
+                final int mana,
+                final String description,
+                final ArrayList<String> colors,
+                final String name) {
         this.health = health;
         this.mana = mana;
-        this.attackDamage = attackDamage;
         this.description = description;
         this.colors = colors;
         this.name = name;
@@ -57,10 +59,9 @@ abstract public class Card implements SerializeHandler {
         }
     }
 
-    public Card(Card card) {
+    public Card(final Card card) {
         this.health = card.health;
         this.mana = card.mana;
-        this.attackDamage = card.attackDamage;
         this.description = card.description;
         this.colors = card.colors;
         this.name = card.name;

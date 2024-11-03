@@ -1,12 +1,14 @@
 package fileio;
 
-import java.lang.reflect.Field;
+import lombok.Getter;
 
+@Getter
 public class SerializableField {
-    final public String label;
-    final public Object value;
+    private final String label;
+    private final Object value;
 
-    public SerializableField(String label, Object value) {
+    public SerializableField(final String label,
+                             final Object value) {
         this.label = label;
         this.value = value;
     }

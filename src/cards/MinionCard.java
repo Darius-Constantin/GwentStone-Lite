@@ -1,6 +1,6 @@
 package cards;
 
-import entities.Minion;
+import fileio.SerializeField;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,9 +8,17 @@ import java.util.Random;
 
 public class MinionCard extends Card {
     final public MinionAbility ability;
+    @SerializeField(label = "attackDamage")
+    final public int attackDamage;
 
-    public MinionCard(int health, int mana, int attackDamage, String description, ArrayList<String> colors, String name) {
-        super(health, mana, attackDamage, description, colors, name);
+    public MinionCard(final int health,
+                      final int mana,
+                      final int attackDamage,
+                      final String description,
+                      final ArrayList<String> colors,
+                      final String name) {
+        super(health, mana, description, colors, name);
+        this.attackDamage = attackDamage;
         switch (name) {
             case "Sentinel":
             case "Berserker":
@@ -35,12 +43,13 @@ public class MinionCard extends Card {
         }
     }
 
-    public MinionCard(MinionCard card) {
+    public MinionCard(final MinionCard card) {
         super(card);
+        this.attackDamage = card.attackDamage;
         ability = card.ability;
     }
 
-    public static ArrayList<MinionCard> cloneDeck(ArrayList<MinionCard> cardList) {
+    public static ArrayList<MinionCard> cloneDeck(final ArrayList<MinionCard> cardList) {
         ArrayList<MinionCard> clonedList = new ArrayList<MinionCard>(cardList.size());
         for (MinionCard card : cardList) {
             clonedList.add(new MinionCard(card));
@@ -48,12 +57,12 @@ public class MinionCard extends Card {
         return clonedList;
     }
 
-    public static ArrayList<MinionCard> shuffleDeck(ArrayList<MinionCard> cardList, int seed) {
+    public static ArrayList<MinionCard> shuffleDeck(final ArrayList<MinionCard> cardList, final int seed) {
         Collections.shuffle(cardList, new Random(seed));
         return cardList;
     }
 
     public String toString() {
-        return "[CARD] " + this.name + ": HP = " + this.health + " - MANA = " + this.mana;
+        return "[CARD] " + this.getName() + ": HP = " + this.getHealth() + " - MANA = " + this.getMana();
     }
 }

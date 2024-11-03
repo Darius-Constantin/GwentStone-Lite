@@ -1,12 +1,19 @@
 package cards;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 
+@Getter
 public class HeroCard extends Card {
-    final public HeroAbility ability;
+    private final HeroAbility ability;
+    static final int STARTINGHEALTH = 30;
 
-    public HeroCard(int mana, int attackDamage, String description, ArrayList<String> colors, String name) {
-        super(30, mana, attackDamage, description, colors, name);
+    public HeroCard(final int mana,
+                    final String description,
+                    final ArrayList<String> colors,
+                    final String name) {
+        super(STARTINGHEALTH, mana, description, colors, name);
 
         switch (name) {
             case "Lord Royce":
