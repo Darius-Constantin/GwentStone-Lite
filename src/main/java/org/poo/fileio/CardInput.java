@@ -76,7 +76,6 @@ public final class CardInput {
                 + ", colors="
                 + colors
                 + ", name='"
-                +  ""
                 + name
                 + '\''
                 + '}';

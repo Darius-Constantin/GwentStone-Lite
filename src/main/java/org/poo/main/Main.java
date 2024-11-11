@@ -3,7 +3,7 @@ package org.poo.main;
 import org.poo.checker.Checker;
 import org.poo.checker.CheckerConstants;
 import org.poo.fileio.IOHandler;
-import org.poo.game.Session;
+import org.poo.meta_game.Session;
 
 import java.io.File;
 import java.io.IOException;

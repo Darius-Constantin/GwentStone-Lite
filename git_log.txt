@@ -1,0 +1,41 @@
+commit 91acc9dbac8ade6ba3f9574e69fe002b24fb60b1
+Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+Date:   Sun Nov 10 22:50:05 2024 +0200
+
+    Migration to Maven
+
+commit f96e9873e528c5b8f45c382ab26b1aceda674834
+Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+Date:   Mon Nov 4 01:14:37 2024 +0200
+
+    Wild idea worked
+
+commit bab0ef90d2136b11f13768ac220f0326d5ad1b62
+Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+Date:   Mon Nov 4 00:10:38 2024 +0200
+
+    wild attempt
+
+commit 7648f501c56b64513f4f49173f9a179fc3f3cd7f
+Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+Date:   Sun Nov 3 02:29:31 2024 +0200
+
+    Started refactoring IOHandler. Can create objects with reflexivity.
+
+commit a67a38d17c0a9d56baf54ca623f48468faf53584
+Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+Date:   Sat Nov 2 23:46:55 2024 +0200
+
+    Logic done, needs refactoring
+
+commit 9cbe797d77dd09e6c9a13b0e5176df21a17a744e
+Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+Date:   Tue Oct 29 23:17:30 2024 +0200
+
+    First test passed -- implemented IOHandler, cards and minions, started parsing input for actions
+
+commit 5e54469e8dcef72c69c02cfb1fc9d07ff692032c
+Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+Date:   Mon Oct 28 22:04:47 2024 +0200
+
+    Added base classes + IOHandler

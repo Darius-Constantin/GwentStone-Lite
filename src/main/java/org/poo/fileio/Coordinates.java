@@ -1,14 +1,17 @@
 package org.poo.fileio;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public final class Coordinates implements SerializeHandler {
-   @SerializeField(label = "x")
+public final class Coordinates {
+   @JsonProperty("x")
    private int x;
-   @SerializeField(label = "y")
+   @JsonProperty("y")
    private int y;
 
    public Coordinates() { }

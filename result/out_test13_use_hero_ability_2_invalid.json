@@ -3,24 +3,24 @@
   "x" : 3,
   "y" : 0,
   "output" : {
-    "attackDamage" : 0,
     "health" : 4,
     "mana" : 2,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
-    "name" : "Disciple"
+    "name" : "Disciple",
+    "attackDamage" : 0
   }
 }, {
   "command" : "getCardAtPosition",
   "x" : 1,
   "y" : 0,
   "output" : {
-    "attackDamage" : 5,
     "health" : 3,
     "mana" : 3,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
-    "name" : "The Ripper"
+    "name" : "The Ripper",
+    "attackDamage" : 5
   }
 }, {
   "command" : "useHeroAbility",
@@ -38,24 +38,24 @@
   "x" : 1,
   "y" : 0,
   "output" : {
-    "attackDamage" : 5,
     "health" : 3,
     "mana" : 3,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
-    "name" : "The Ripper"
+    "name" : "The Ripper",
+    "attackDamage" : 5
   }
 }, {
   "command" : "getCardAtPosition",
   "x" : 3,
   "y" : 0,
   "output" : {
-    "attackDamage" : 0,
     "health" : 5,
     "mana" : 2,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
-    "name" : "Disciple"
+    "name" : "Disciple",
+    "attackDamage" : 0
   }
 }, {
   "command" : "useHeroAbility",
@@ -76,103 +76,103 @@
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
-    "attackDamage" : 3,
     "health" : 3,
     "mana" : 2,
     "description" : "Standard card: Trained by the best, nothing will catch him off-guard.",
     "colors" : [ "Black", "White" ],
-    "name" : "Sentinel"
+    "name" : "Sentinel",
+    "attackDamage" : 3
   }, {
-    "attackDamage" : 4,
     "health" : 2,
     "mana" : 2,
     "description" : "Premium card: Fear him. Your last breath is now.",
     "colors" : [ "Purple", "Yellow" ],
-    "name" : "Berserker"
+    "name" : "Berserker",
+    "attackDamage" : 4
   } ], [ {
-    "attackDamage" : 6,
     "health" : 3,
     "mana" : 3,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
-    "name" : "The Ripper"
+    "name" : "The Ripper",
+    "attackDamage" : 6
   }, {
-    "attackDamage" : 2,
     "health" : 7,
     "mana" : 3,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Brown", "Black", "Grey" ],
-    "name" : "Goliath"
+    "name" : "Goliath",
+    "attackDamage" : 2
   }, {
-    "attackDamage" : 6,
     "health" : 3,
     "mana" : 5,
     "description" : "Premium card: Insanity is always an option, now it is an absolute.",
     "colors" : [ "Red", "Black" ],
-    "name" : "Miraj"
+    "name" : "Miraj",
+    "attackDamage" : 6
   }, {
-    "attackDamage" : 6,
     "health" : 4,
     "mana" : 4,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Black", "Yellow" ],
-    "name" : "The Ripper"
+    "name" : "The Ripper",
+    "attackDamage" : 6
   }, {
-    "attackDamage" : 6,
     "health" : 4,
     "mana" : 4,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
-    "name" : "Miraj"
+    "name" : "Miraj",
+    "attackDamage" : 6
   } ], [ {
-    "attackDamage" : 2,
     "health" : 8,
     "mana" : 3,
     "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
     "colors" : [ "Brown", "Black", "Grey" ],
-    "name" : "Goliath"
+    "name" : "Goliath",
+    "attackDamage" : 2
   }, {
-    "attackDamage" : 1,
     "health" : 8,
     "mana" : 4,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Red", "Purple" ],
-    "name" : "Goliath"
+    "name" : "Goliath",
+    "attackDamage" : 1
   }, {
-    "attackDamage" : 5,
     "health" : 4,
     "mana" : 4,
     "description" : "Premium card: Insanity is always an option, now it is an absolute.",
     "colors" : [ "Yellow", "Orange", "Red" ],
-    "name" : "Miraj"
+    "name" : "Miraj",
+    "attackDamage" : 5
   } ], [ {
-    "attackDamage" : 0,
     "health" : 6,
     "mana" : 2,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
-    "name" : "Disciple"
+    "name" : "Disciple",
+    "attackDamage" : 0
   }, {
-    "attackDamage" : 3,
     "health" : 4,
     "mana" : 1,
     "description" : "Standard card: A drink can always be served, with the blood of his enemies.",
     "colors" : [ "Red", "Blue", "Pink" ],
-    "name" : "Berserker"
+    "name" : "Berserker",
+    "attackDamage" : 3
   }, {
-    "attackDamage" : 0,
     "health" : 3,
     "mana" : 3,
     "description" : "Premium card: The will of Gods has been spoken, obey and you shall be saved...or not.",
     "colors" : [ "Green", "Yellow", "Blue" ],
-    "name" : "Disciple"
+    "name" : "Disciple",
+    "attackDamage" : 0
   }, {
-    "attackDamage" : 2,
     "health" : 3,
     "mana" : 2,
     "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
     "colors" : [ "Black", "White" ],
-    "name" : "Sentinel"
+    "name" : "Sentinel",
+    "attackDamage" : 2
   } ] ]
 }, {
   "command" : "getCardsInHand",
