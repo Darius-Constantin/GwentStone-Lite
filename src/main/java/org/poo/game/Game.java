@@ -1,22 +1,41 @@
 package org.poo.game;
 
+import org.poo.fileio.CardInput;
+import org.poo.fileio.Coordinates;
 import org.poo.game.cards.Card;
 import org.poo.game.cards.CardType;
-import org.poo.game.cards.HeroAbility;
 import org.poo.game.cards.HeroCard;
-import org.poo.game.cards.MinionAbility;
 import org.poo.game.cards.MinionCard;
+import org.poo.game.cards.SpecialMinionCard;
+import org.poo.game.cards.genericCards.Berserker;
+import org.poo.game.cards.genericCards.Goliath;
+import org.poo.game.cards.genericCards.Sentinel;
+import org.poo.game.cards.genericCards.Warden;
+import org.poo.game.cards.heroCards.EmpressThorina;
+import org.poo.game.cards.heroCards.GeneralKocioraw;
+import org.poo.game.cards.heroCards.KingMudface;
+import org.poo.game.cards.heroCards.LordRoyce;
+import org.poo.game.cards.specialCards.Disciple;
+import org.poo.game.cards.specialCards.Miraj;
+import org.poo.game.cards.specialCards.TheCursedOne;
+import org.poo.game.cards.specialCards.TheRipper;
 import org.poo.game.entities.Hero;
 import org.poo.game.entities.Entity;
 import org.poo.game.entities.Minion;
 import org.poo.fileio.ActionsInput;
 import org.poo.fileio.IOHandler;
 import lombok.Getter;
-import org.poo.meta_game.Session;
+import org.poo.game.entities.SpecialMinion;
+import org.poo.metaGame.Session;
+import org.poo.utils.Quintet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.function.Function;
 
 public class Game {
     private final Session currentSession;
@@ -91,7 +110,9 @@ public class Game {
                     return;
                 }
 
-                Minion minion = new Minion(cardToPlace, x, y, game, currentPlayerIdx);
+                Minion minion =
+                        minionConstructor.get(cardToPlace.getName())
+                                .apply(new Quintet<>(cardToPlace, x, y, game, currentPlayerIdx));
                 game.heroes[currentPlayerIdx].addMana(-cardToPlace.getMana());
                 game.playedCards[x][y] = minion;
                 game.heroes[currentPlayerIdx].removeCard(action.getHandIdx());
@@ -99,11 +120,15 @@ public class Game {
         },
         CARD_USES_ATTACK("cardUsesAttack", CommandType.GAMEPLAY) {
             @Override
-            public void execute(Game game, ActionsInput action) throws IllegalAccessException {
-                var cardAttacker = action.getCardAttacker();
-                var cardAttacked = action.getCardAttacked();
+            public void execute(Game game, ActionsInput action) {
+                Coordinates cardAttacker = action.getCardAttacker();
+                Coordinates cardAttacked = action.getCardAttacked();
                 Minion attacker = game.playedCards[cardAttacker.getX()][cardAttacker.getY()];
-                Minion attacked = game.playedCards[cardAttacked.getX()][cardAttacked.getY()];
+                Minion target = game.playedCards[cardAttacked.getX()][cardAttacked.getY()];
+
+                if (attacker == null || target == null) {
+                    return;
+                }
 
                 IOHandler.INSTANCE.writeToObject("command", "cardUsesAttack");
                 IOHandler.INSTANCE.writeJsonNodeToObject("cardAttacker",
@@ -113,49 +138,34 @@ public class Game {
                         IOHandler.INSTANCE
                                 .createNodeFromObject(action.getCardAttacked()));
 
-                if (attacker == null || attacked == null) {
-                    return;
-                }
-                if (attacker.getOwnerPlayerIdx() == attacked.getOwnerPlayerIdx()) {
-                    IOHandler.INSTANCE.writeToObject("error",
-                            "Attacked card does not belong to the enemy.");
-                    IOHandler.INSTANCE.writeObjectToOutput();
-                    return;
-                }
-
-                if (!attacker.isCanAct()) {
-                    IOHandler.INSTANCE.writeToObject("error",
-                            "Attacker card has already attacked this turn.");
-                    IOHandler.INSTANCE.writeObjectToOutput();
-                    return;
-                }
-
-                if (attacker.isFrozen()) {
-                    IOHandler.INSTANCE.writeToObject("error",
-                            "Attacker card is frozen.");
-                    IOHandler.INSTANCE.writeObjectToOutput();
-                    return;
-                }
-
-                if (game.isTauntOnEnemySide() && attacked.getCard().getType() != CardType.TAUNT) {
-                    IOHandler.INSTANCE.writeToObject("error",
-                            "Attacked card is not of type 'Tank'.");
-                    IOHandler.INSTANCE.writeObjectToOutput();
-                    return;
-                }
-
-                attacker.dealDamage(attacked);
-                attacker.setCanAct(false);
+                attacker.attack(target);
             }
         },
         CARD_USES_ABILITY("cardUsesAbility", CommandType.GAMEPLAY) {
             @Override
-            public void execute(Game game, ActionsInput action) throws IllegalAccessException {
-                var cardAttacker = action.getCardAttacker();
-                var cardAttacked = action.getCardAttacked();
-                Minion caster = game.playedCards[cardAttacker.getX()][cardAttacker.getY()];
+            public void execute(Game game, ActionsInput action) {
+                Coordinates cardAttacker = action.getCardAttacker();
+                Coordinates cardAttacked = action.getCardAttacked();
+
+                if (game.playedCards[cardAttacker.getX()][cardAttacker.getY()] == null) {
+                    return;
+                }
+
+                CardType casterType =
+                        game.playedCards[cardAttacker.getX()][cardAttacker.getY()]
+                                .getCard()
+                                .getType();
+
+
+                if ((casterType.getAttributes() & CardType.SPECIAL) == 0b00000000) {
+                    return;
+                }
+
+                SpecialMinion caster =
+                        (SpecialMinion) game.playedCards[cardAttacker.getX()][cardAttacker.getY()];
                 Minion target = game.playedCards[cardAttacked.getX()][cardAttacked.getY()];
-                if (caster == null || target == null) {
+
+                if (target == null) {
                     return;
                 }
 
@@ -167,44 +177,16 @@ public class Game {
                         IOHandler.INSTANCE
                                 .createNodeFromObject(action.getCardAttacked()));
 
-
-                if (canMinionAct(caster)) {
-                    return;
-                }
-
-                if (((MinionCard) caster.getCard()).getAbility() == MinionAbility.GODSPLAN) {
-                    if (caster.getOwnerPlayerIdx() != target.getOwnerPlayerIdx()) {
-                        IOHandler.INSTANCE.writeToObject("error",
-                                "Attacked card does not belong to the current player.");
-                        IOHandler.INSTANCE.writeObjectToOutput();
-                        return;
-                    }
-                } else {
-                    if (caster.getOwnerPlayerIdx() == target.getOwnerPlayerIdx()) {
-                        IOHandler.INSTANCE.writeToObject("error",
-                                "Attacked card does not belong to the enemy.");
-                        IOHandler.INSTANCE.writeObjectToOutput();
-                        return;
-                    }
-
-                    if (game.isTauntOnEnemySide() && target.getCard().getType() != CardType.TAUNT) {
-                        IOHandler.INSTANCE.writeToObject("error",
-                                "Attacked card is not of type 'Tank'.");
-                        IOHandler.INSTANCE.writeObjectToOutput();
-                        return;
-                    }
-                }
-
-                ((MinionCard) caster.getCard()).getAbility().useAbility(caster, target);
-                caster.setCanAct(false);
+                caster.useAbility(target);
             }
         },
         USE_ATTACK_HERO("useAttackHero", CommandType.GAMEPLAY) {
             @Override
-            public void execute(Game game, ActionsInput action) throws IllegalAccessException {
+            public void execute(Game game, ActionsInput action) {
                 final int currentPlayerIdx = game.getCurrentPlayerIdx();
-                var cardAttacker = action.getCardAttacker();
+                Coordinates cardAttacker = action.getCardAttacker();
                 Minion attacker = game.playedCards[cardAttacker.getX()][cardAttacker.getY()];
+
                 if (attacker == null) {
                     return;
                 }
@@ -214,30 +196,7 @@ public class Game {
                         IOHandler.INSTANCE
                                 .createNodeFromObject(action.getCardAttacker()));
 
-                if (canMinionAct(attacker)) {
-                    return;
-                }
-
-                boolean tauntInLine = false;
-                for (var minion : game.playedCards[currentPlayerIdx + 1]) {
-                    if (minion == null) {
-                        break;
-                    }
-                    if (minion.getCard().getType() == CardType.TAUNT) {
-                        tauntInLine = true;
-                        break;
-                    }
-                }
-
-                if (tauntInLine) {
-                    IOHandler.INSTANCE.writeToObject("error",
-                            "Attacked card is not of type 'Tank'.");
-                    IOHandler.INSTANCE.writeObjectToOutput();
-                    return;
-                }
-
-                attacker.dealDamage(game.heroes[currentPlayerIdx == 0 ? 1 : 0]);
-                attacker.setCanAct(false);
+                attacker.attack(game.heroes[currentPlayerIdx == 0 ? 1 : 0]);
             }
         },
         USE_HERO_ABILITY("useHeroAbility", CommandType.GAMEPLAY) {
@@ -246,56 +205,9 @@ public class Game {
                 final int currentPlayerIdx = game.getCurrentPlayerIdx();
                 IOHandler.INSTANCE.writeToObject("command", "useHeroAbility");
                 IOHandler.INSTANCE.writeToObject("affectedRow", action.getAffectedRow());
-                if (game.heroes[currentPlayerIdx].getCard().getMana()
-                        > game.heroes[currentPlayerIdx].getMana()) {
-                    IOHandler.INSTANCE.writeToObject("error",
-                            "Not enough mana to use hero's ability.");
-                    IOHandler.INSTANCE.writeObjectToOutput();
-                    return;
-                }
 
-                if (!game.heroes[currentPlayerIdx].isCanAct()) {
-                    IOHandler.INSTANCE.writeToObject("error",
-                            "Hero has already attacked this turn.");
-                    IOHandler.INSTANCE.writeObjectToOutput();
-                    return;
-                }
-
-                HeroCard currentHero = (HeroCard) game.heroes[currentPlayerIdx].getCard();
-                if (currentHero.getAbility() == HeroAbility.LOWBLOW
-                        || currentHero.getAbility() == HeroAbility.SUBZERO) {
-                    if ((currentPlayerIdx == 1
-                            && (action.getAffectedRow() == P2_BACK
-                            || action.getAffectedRow() == P2_FRONT))
-                            || (currentPlayerIdx == 0
-                            && (action.getAffectedRow() == P1_FRONT
-                            || action.getAffectedRow() == P1_BACK))) {
-                        IOHandler.INSTANCE.writeToObject("error",
-                                "Selected row does not belong to the enemy.");
-                        IOHandler.INSTANCE.writeObjectToOutput();
-                        return;
-                    }
-                }
-
-                if (currentHero.getAbility() == HeroAbility.EARTHBORN
-                        || currentHero.getAbility() == HeroAbility.BLOODTHIRST) {
-                    if ((currentPlayerIdx == 1
-                            && (action.getAffectedRow() == P1_FRONT
-                            || action.getAffectedRow() == P1_BACK))
-                            || (currentPlayerIdx == 0
-                            && (action.getAffectedRow() == P2_BACK
-                            || action.getAffectedRow() == P2_FRONT))) {
-                        IOHandler.INSTANCE.writeToObject("error",
-                                "Selected row does not belong to the current player.");
-                        IOHandler.INSTANCE.writeObjectToOutput();
-                        return;
-                    }
-                }
-
-                game.heroes[currentPlayerIdx].addMana(-game.heroes[currentPlayerIdx].getCard().getMana());
-                ((HeroCard) game.heroes[currentPlayerIdx].getCard()).getAbility()
-                        .useAbility(game.playedCards[action.getAffectedRow()]);
-                game.heroes[currentPlayerIdx].setCanAct(false);
+                game.heroes[currentPlayerIdx].useAbility(game.playedCards[action.getAffectedRow()],
+                        action.getAffectedRow());
             }
         },
         END_PLAYER_TURN("endPlayerTurn", CommandType.GAMEPLAY) {
@@ -323,7 +235,7 @@ public class Game {
         },
         GET_PLAYER_DECK("getPlayerDeck", CommandType.DEBUG) {
             @Override
-            public void execute(Game game, ActionsInput action) throws IllegalAccessException {
+            public void execute(Game game, ActionsInput action) {
                 Hero selectedHero = game.heroes[action.getPlayerIdx() - 1];
                 IOHandler.INSTANCE.writeToObject("command", action.getCommand());
                 IOHandler.INSTANCE.writeToObject("playerIdx", action.getPlayerIdx());
@@ -334,7 +246,7 @@ public class Game {
         },
         GET_PLAYER_HERO("getPlayerHero", CommandType.DEBUG) {
             @Override
-            public void execute(Game game, ActionsInput action) throws IllegalAccessException {
+            public void execute(Game game, ActionsInput action) {
                 Hero selectedHero = game.heroes[action.getPlayerIdx() - 1];
                 IOHandler.INSTANCE.writeToObject("command", action.getCommand());
                 IOHandler.INSTANCE.writeToObject("playerIdx", action.getPlayerIdx());
@@ -353,7 +265,7 @@ public class Game {
         },
         GET_FROZEN_CARDS_ON_TABLE("getFrozenCardsOnTable", CommandType.DEBUG) {
             @Override
-            public void execute(Game game, ActionsInput action) throws IllegalAccessException {
+            public void execute(Game game, ActionsInput action) {
                 IOHandler.INSTANCE.writeToObject("command", action.getCommand());
                 ArrayList<Minion> frozenMinions = new ArrayList<>(TABLE_HEIGHT * TABLE_WIDTH);
                 for (Minion[] line : game.playedCards) {
@@ -377,7 +289,7 @@ public class Game {
         },
         GET_CARD_AT_POSITION("getCardAtPosition", CommandType.DEBUG) {
             @Override
-            public void execute(Game game, ActionsInput action) throws IllegalAccessException {
+            public void execute(Game game, ActionsInput action) {
                 IOHandler.INSTANCE.writeToObject("command", action.getCommand());
                 IOHandler.INSTANCE.writeToObject("x", action.getX());
                 IOHandler.INSTANCE.writeToObject("y", action.getY());
@@ -394,7 +306,7 @@ public class Game {
         },
         GET_CARDS_ON_TABLE("getCardsOnTable", CommandType.DEBUG) {
             @Override
-            public void execute(Game game, ActionsInput action) throws IllegalAccessException {
+            public void execute(Game game, ActionsInput action) {
                 IOHandler.INSTANCE.writeToObject("command", action.getCommand());
                 ArrayList<ArrayList<Minion>> table = new ArrayList<>(TABLE_HEIGHT);
                 for (Minion[] line : game.playedCards) {
@@ -408,11 +320,12 @@ public class Game {
         },
         GET_CARDS_IN_HAND("getCardsInHand", CommandType.DEBUG) {
             @Override
-            public void execute(Game game, ActionsInput action) throws IllegalAccessException {
+            public void execute(Game game, ActionsInput action) {
                 IOHandler.INSTANCE.writeToObject("command", action.getCommand());
                 IOHandler.INSTANCE.writeToObject("playerIdx", action.getPlayerIdx());
                 IOHandler.INSTANCE.writeJsonNodeToObject("output",
-                        IOHandler.INSTANCE.createNodeFromObject(game.heroes[action.getPlayerIdx() - 1].getInHandCards()));
+                        IOHandler.INSTANCE.createNodeFromObject(game
+                                .heroes[action.getPlayerIdx() - 1].getInHandCards()));
                 IOHandler.INSTANCE.writeObjectToOutput();
             }
         },
@@ -421,8 +334,8 @@ public class Game {
             public void execute(Game game, ActionsInput action) {
                 IOHandler.INSTANCE.writeToObject("command", action.getCommand());
                 IOHandler.INSTANCE.writeToObject("output",
-                        game.currentSession
-                                .getPlayerWins(0) + game.currentSession.getPlayerWins(1));
+                        game.currentSession.getPlayerWins(0)
+                                + game.currentSession.getPlayerWins(1));
                 IOHandler.INSTANCE.writeObjectToOutput();
             }
         },
@@ -445,39 +358,73 @@ public class Game {
             }
         };
 
-        private static boolean canMinionAct(Minion caster) {
-            if (caster.isFrozen()) {
-                IOHandler.INSTANCE.writeToObject("error",
-                        "Attacker card is frozen.");
-                IOHandler.INSTANCE.writeObjectToOutput();
-                return true;
-            }
-
-            if (!caster.isCanAct()) {
-                IOHandler.INSTANCE.writeToObject("error",
-                        "Attacker card has already attacked this turn.");
-                IOHandler.INSTANCE.writeObjectToOutput();
-                return true;
-            }
-            return false;
-        }
-
         private final String command;
-        private final CommandType commandType;
+        private final CommandType type;
 
         Command(final String command, final CommandType type) {
             this.command = command;
-            this.commandType = type;
+            this.type = type;
         }
+    }
 
-        public static Command getCommandFromString(final String command) {
-            for (var type : Command.values()) {
-                if (type.command.equals(command)) {
-                    return type;
-                }
-            }
-            throw new IllegalArgumentException("Illegal command: " + command);
+    private static final HashMap<String, Command> commandsMap = new HashMap<>();
+    private final static HashMap<String,
+            Function<Quintet<MinionCard, Integer, Integer, Game, Integer>, Minion>> minionConstructor =
+            new HashMap<>();
+
+    static {
+        minionConstructor.put("Disciple",
+                (Quintet<MinionCard, Integer, Integer, Game, Integer> params) -> {
+           return new SpecialMinion((SpecialMinionCard) params.getObj0(), params.getObj1(),
+                   params.getObj2(), params.getObj3(), params.getObj4());
+        });
+        minionConstructor.put("The Ripper", (Quintet<MinionCard, Integer, Integer, Game, Integer> params) -> {
+            return new SpecialMinion((SpecialMinionCard) params.getObj0(), params.getObj1(),
+                    params.getObj2(), params.getObj3(), params.getObj4());
+        });
+        minionConstructor.put("Miraj", (Quintet<MinionCard, Integer, Integer, Game, Integer> params) -> {
+            return new SpecialMinion((SpecialMinionCard) params.getObj0(), params.getObj1(),
+                    params.getObj2(), params.getObj3(), params.getObj4());
+        });
+        minionConstructor.put("The Cursed One", (Quintet<MinionCard, Integer, Integer, Game, Integer> params) -> {
+            return new SpecialMinion((SpecialMinionCard) params.getObj0(), params.getObj1(),
+                    params.getObj2(), params.getObj3(), params.getObj4());
+        });
+
+        minionConstructor.put("Goliath", (Quintet<MinionCard, Integer, Integer, Game, Integer> params) -> {
+            return new Minion(params.getObj0(), params.getObj1(),
+                    params.getObj2(), params.getObj3(), params.getObj4());
+        });
+        minionConstructor.put("Warden", (Quintet<MinionCard, Integer, Integer, Game, Integer> params) -> {
+            return new Minion(params.getObj0(), params.getObj1(),
+                    params.getObj2(), params.getObj3(), params.getObj4());
+        });
+        minionConstructor.put("Sentinel", (Quintet<MinionCard, Integer, Integer, Game, Integer> params) -> {
+            return new Minion(params.getObj0(), params.getObj1(),
+                    params.getObj2(), params.getObj3(), params.getObj4());
+        });
+        minionConstructor.put("Berserker", (Quintet<MinionCard, Integer, Integer, Game, Integer> params) -> {
+            return new Minion(params.getObj0(), params.getObj1(),
+                    params.getObj2(), params.getObj3(), params.getObj4());
+        });
+
+        for (Command value : Command.values()) {
+            commandsMap.put(value.command, value);
         }
+    }
+
+    //public static ArrayList<MinionCard> cloneDeck(final ArrayList<MinionCard> cardList) {
+    //    ArrayList<MinionCard> clonedList = new ArrayList<>(cardList.size());
+    //    for (MinionCard card : cardList) {
+    //        clonedList.add(new MinionCard(card));
+    //    }
+    //    return clonedList;
+    //}
+
+    public static ArrayList<MinionCard> shuffleDeck(final ArrayList<MinionCard> cardList,
+                                                    final int seed) {
+        Collections.shuffle(cardList, new Random(seed));
+        return cardList;
     }
 
     public Game(final Session currentSession,
@@ -491,18 +438,10 @@ public class Game {
         this.currentSession = currentSession;
         this.startingPlayer = startingPlayer;
         heroes[0] = new Hero(player1HeroCard,
-                MinionCard.shuffleDeck(MinionCard.cloneDeck(player1Deck), seed), this, 0);
+                shuffleDeck(new ArrayList<>(player1Deck), seed), this, 0);
         heroes[1] = new Hero(player2HeroCard,
-                MinionCard.shuffleDeck(MinionCard.cloneDeck(player2Deck), seed), this, 1);
+                shuffleDeck(new ArrayList<>(player2Deck), seed), this, 1);
         this.actions = actions;
-    }
-
-    public int getCurrentTurn() {
-        return totalTurns / 2 + 1;
-    }
-
-    public int getCurrentPlayerIdx() {
-        return totalTurns % 2 == 0 ? startingPlayer : (startingPlayer == 0 ? 1 : 0);
     }
 
     public void playGame() throws IllegalAccessException {
@@ -511,14 +450,22 @@ public class Game {
         }
 
         for (ActionsInput actionInput : actions) {
-            Command command = Command.getCommandFromString(actionInput.getCommand());
-            if (isGameOver && command.getCommandType() == CommandType.GAMEPLAY) {
+            Command command = commandsMap.get(actionInput.getCommand());
+            if (command == null || (isGameOver && command.getType() == CommandType.GAMEPLAY)) {
                 continue;
             }
             IOHandler.INSTANCE.beginObject();
             command.execute(this, actionInput);
             IOHandler.INSTANCE.endObject();
         }
+    }
+
+    public int getCurrentTurn() {
+        return totalTurns / 2 + 1;
+    }
+
+    public int getCurrentPlayerIdx() {
+        return totalTurns % 2 == 0 ? startingPlayer : (startingPlayer == 0 ? 1 : 0);
     }
 
     public void onMinionDeath(final Minion minion) {
@@ -551,7 +498,7 @@ public class Game {
         onMinionDeath((Minion) entity);
     }
 
-    private boolean isTauntOnEnemySide() {
+    public boolean isTauntOnEnemySide() {
         for (var minion : playedCards[getCurrentPlayerIdx() + 1]) {
             if (minion == null) {
                 break;
@@ -562,4 +509,21 @@ public class Game {
         }
         return false;
     }
+
+    //private static boolean canMinionAct(Minion minion) {
+    //    if (minion.isFrozen()) {
+    //        IOHandler.INSTANCE.writeToObject("error",
+    //                "Attacker card is frozen.");
+    //        IOHandler.INSTANCE.writeObjectToOutput();
+    //        return true;
+    //    }
+    //
+    //    if (!minion.isCanAct()) {
+    //        IOHandler.INSTANCE.writeToObject("error",
+    //                "Attacker card has already attacked this turn.");
+    //        IOHandler.INSTANCE.writeObjectToOutput();
+    //        return true;
+    //    }
+    //    return false;
+    //}
 }

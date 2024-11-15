@@ -1,7 +1,6 @@
 package org.poo.game.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import org.poo.game.cards.Card;
@@ -21,13 +20,13 @@ public class Entity {
     protected boolean canAct = true;
     @Getter
     @JsonUnwrapped
-    private final Card card;
+    protected final Card card;
 
     @JsonIgnore
-    private final Game currentGame;
+    protected final Game currentGame;
     @Getter
     @JsonIgnore
-    private final int ownerPlayerIdx;
+    protected final int ownerPlayerIdx;
 
     public Entity(final Card card,
                   final Game currentGame,

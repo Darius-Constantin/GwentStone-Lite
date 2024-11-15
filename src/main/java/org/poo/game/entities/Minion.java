@@ -2,6 +2,8 @@ package org.poo.game.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.poo.fileio.IOHandler;
+import org.poo.game.cards.CardType;
 import org.poo.game.cards.MinionCard;
 import org.poo.game.Game;
 import lombok.Getter;
@@ -34,16 +36,49 @@ public class Minion extends Entity {
         target.takeDamage(getAttackDamage());
     }
 
-    public String toString() {
-        return "[MINION] " + getCard().getName()
-                + " HP = " + health
-                + " MANA = " + getCard().getMana()
-                + " ATK = " + attackDamage;
-    }
-
     @Override
     public void reset() {
         this.canAct = true;
         this.frozen = false;
+    }
+
+    public boolean hasMinionActed() {
+        if (!this.isCanAct()) {
+            IOHandler.INSTANCE.writeToObject("error",
+                    "Attacker card has already attacked this turn.");
+            IOHandler.INSTANCE.writeObjectToOutput();
+            return true;
+        }
+
+        if (this.isFrozen()) {
+            IOHandler.INSTANCE.writeToObject("error",
+                    "Attacker card is frozen.");
+            IOHandler.INSTANCE.writeObjectToOutput();
+            return true;
+        }
+
+        return false;
+    }
+
+    public void attack(final Entity target) {
+        if (this.getOwnerPlayerIdx() == target.getOwnerPlayerIdx()) {
+            IOHandler.INSTANCE.writeToObject("error",
+                    "Attacked card does not belong to the enemy.");
+            IOHandler.INSTANCE.writeObjectToOutput();
+            return;
+        }
+
+        if (this.hasMinionActed())
+            return;
+
+        if (currentGame.isTauntOnEnemySide() && target.getCard().getType() != CardType.TAUNT) {
+            IOHandler.INSTANCE.writeToObject("error",
+                    "Attacked card is not of type 'Tank'.");
+            IOHandler.INSTANCE.writeObjectToOutput();
+            return;
+        }
+
+        this.dealDamage(target);
+        this.setCanAct(false);
     }
 }

@@ -1,4 +1,4 @@
-package org.poo.meta_game;
+package org.poo.metaGame;
 
 import org.poo.game.cards.MinionCard;
 import lombok.Getter;
@@ -17,5 +17,4 @@ public class Player {
     public Player(final ArrayList<ArrayList<MinionCard>> decks) {
         this.decks = decks;
     }
-
 }

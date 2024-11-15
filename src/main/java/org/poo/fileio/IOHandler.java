@@ -27,7 +27,7 @@ public final class IOHandler {
 
     private ArrayList<ObjectNode> objectNodes = new ArrayList<>();
 
-    public JsonNode createNodeFromObject(final Object obj) throws IllegalAccessException {
+    public JsonNode createNodeFromObject(final Object obj) {
         return objectMapper.valueToTree(obj);
     }
 
@@ -48,8 +48,8 @@ public final class IOHandler {
 
     public void handleOutput(final String outPath) throws IOException {
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
+        System.out.println(outPath);
         objectWriter.writeValue(new File(outPath), output);
-
         resetInstance();
     }
 

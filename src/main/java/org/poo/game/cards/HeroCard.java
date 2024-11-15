@@ -2,37 +2,25 @@ package org.poo.game.cards;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import org.poo.game.entities.Minion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Getter
-public class HeroCard extends Card {
+public abstract class HeroCard extends Card {
     @JsonIgnore
-    private final HeroAbility ability;
+    static final int STARTING_HEALTH = 30;
     @JsonIgnore
-    static final int STARTINGHEALTH = 30;
+    final boolean abilityAffectEnemy;
 
     public HeroCard(final int mana,
                     final String description,
                     final ArrayList<String> colors,
-                    final String name) {
-        super(STARTINGHEALTH, mana, description, colors, name);
-
-        switch (name) {
-            case "Lord Royce":
-                ability = HeroAbility.SUBZERO;
-                break;
-            case "Empress Thorina":
-                ability = HeroAbility.LOWBLOW;
-                break;
-            case "King Mudface":
-                ability = HeroAbility.EARTHBORN;
-                break;
-            case "General Kocioraw":
-                ability = HeroAbility.BLOODTHIRST;
-                break;
-            default:
-                throw new RuntimeException("Invalid card.");
-        }
+                    final String name, boolean abilityAffectEnemy) {
+        super(STARTING_HEALTH, mana, description, colors, name, CardType.HERO);
+        this.abilityAffectEnemy = abilityAffectEnemy;
     }
+
+    public abstract void useAbility(Minion[] row);
 }

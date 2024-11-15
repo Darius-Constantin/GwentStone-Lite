@@ -1,17 +1,12 @@
 package org.poo.game.cards;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
 @Getter
-public class MinionCard extends Card {
-    @JsonIgnore
-    private final MinionAbility ability;
+public abstract class MinionCard extends Card {
     @JsonProperty("attackDamage")
     private final int attackDamage;
 
@@ -20,50 +15,14 @@ public class MinionCard extends Card {
                       final int attackDamage,
                       final String description,
                       final ArrayList<String> colors,
-                      final String name) {
-        super(health, mana, description, colors, name);
+                      final String name,
+                      final CardType type) {
+        super(health, mana, description, colors, name, type);
         this.attackDamage = attackDamage;
-        switch (name) {
-            case "Sentinel":
-            case "Berserker":
-            case "Goliath":
-            case "Warden":
-                ability = MinionAbility.MINION;
-                break;
-            case "The Ripper":
-                ability = MinionAbility.WEAKKNEES;
-                break;
-            case "Miraj":
-                ability = MinionAbility.SKYJACK;
-                break;
-            case "Disciple":
-                ability = MinionAbility.GODSPLAN;
-                break;
-            case "The Cursed One":
-                ability = MinionAbility.SHAPESHIFT;
-                break;
-            default:
-                throw new RuntimeException("Invalid card.");
-        }
     }
 
     public MinionCard(final MinionCard card) {
         super(card);
         this.attackDamage = card.attackDamage;
-        ability = card.ability;
-    }
-
-    public static ArrayList<MinionCard> cloneDeck(final ArrayList<MinionCard> cardList) {
-        ArrayList<MinionCard> clonedList = new ArrayList<MinionCard>(cardList.size());
-        for (MinionCard card : cardList) {
-            clonedList.add(new MinionCard(card));
-        }
-        return clonedList;
-    }
-
-    public static ArrayList<MinionCard> shuffleDeck(final ArrayList<MinionCard> cardList,
-                                                    final int seed) {
-        Collections.shuffle(cardList, new Random(seed));
-        return cardList;
     }
 }

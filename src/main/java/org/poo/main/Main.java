@@ -3,7 +3,7 @@ package org.poo.main;
 import org.poo.checker.Checker;
 import org.poo.checker.CheckerConstants;
 import org.poo.fileio.IOHandler;
-import org.poo.meta_game.Session;
+import org.poo.metaGame.Session;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,14 +43,14 @@ public final class Main {
         Files.createDirectories(path);
 
         for (File file : Objects.requireNonNull(directory.listFiles())) {
-            //if (!file.getName().equalsIgnoreCase("test01_game_start.json"))
-            //    continue;
-            String filepath = CheckerConstants.OUT_PATH + file.getName();
-            File out = new File(filepath);
-            boolean isCreated = out.createNewFile();
-            if (isCreated) {
-                action(file.getName(), filepath);
-            }
+            //if (file.getName().equals("test07_use_card_ability_invalid.json")) {
+                String filepath = CheckerConstants.OUT_PATH + file.getName();
+                File out = new File(filepath);
+                boolean isCreated = out.createNewFile();
+                if (isCreated) {
+                    action(file.getName(), filepath);
+                }
+            //}
         }
 
         Checker.calculateScore();
