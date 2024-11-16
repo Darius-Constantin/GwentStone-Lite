@@ -58,51 +58,42 @@ public class Minion extends Entity {
     /**
      * Function to determine if this minion can act. A minion can act only if it hasn't already
      * acted this turn and if it is not frozen.
-     * @return True if the minion can act. False otherwise.
+     * @return {@code null} if the minion can act. An error message otherwise.
      */
-    public final boolean canMinionAct() {
+    public final String canMinionAct() {
         if (!this.isCanAct()) {
-            IOHandler.getInstance().writeToObject("error",
-                    "Attacker card has already attacked this turn.");
-            IOHandler.getInstance().writeObjectToOutput();
-            return true;
+            return "Attacker card has already attacked this turn.";
         }
 
         if (this.isFrozen()) {
-            IOHandler.getInstance().writeToObject("error",
-                    "Attacker card is frozen.");
-            IOHandler.getInstance().writeObjectToOutput();
-            return true;
+            return "Attacker card is frozen.";
         }
 
-        return false;
+        return null;
     }
 
     /**
      * Function used to attempt to attack a minion. If multiple checks fail (such as checking if
      * the minion hasn't already acted this turn), the attack will not be triggered.
      * @param target The target of the attack who might take damage.
+     * @return {@code null} if the attack was successful. An error message otherwise.
      */
-    public final void attack(final Entity target) {
+    public final String attack(final Entity target) {
         if (this.getOwnerPlayerIdx() == target.getOwnerPlayerIdx()) {
-            IOHandler.getInstance().writeToObject("error",
-                    "Attacked card does not belong to the enemy.");
-            IOHandler.getInstance().writeObjectToOutput();
-            return;
+            return "Attacked card does not belong to the enemy.";
         }
 
-        if (this.canMinionAct()) {
-            return;
+        String err = this.canMinionAct();
+        if (err != null) {
+            return err;
         }
 
         if (currentGame.isTauntOnEnemySide() && target.getCard().getType() != CardType.TAUNT) {
-            IOHandler.getInstance().writeToObject("error",
-                    "Attacked card is not of type 'Tank'.");
-            IOHandler.getInstance().writeObjectToOutput();
-            return;
+            return "Attacked card is not of type 'Tank'.";
         }
 
         this.dealDamage(target);
         this.setCanAct(false);
+        return null;
     }
 }

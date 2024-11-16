@@ -2,7 +2,6 @@ package org.poo.game.cards;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import org.poo.fileio.IOHandler;
 import org.poo.game.entities.Minion;
 
 import java.util.ArrayList;
@@ -32,16 +31,13 @@ public abstract class SpecialMinionCard extends MinionCard {
      * {@link org.poo.game.cards.specialCards.Disciple}).
      * @param caster The minion that attempts to cast the ability.
      * @param target The minion upon which the ability will be cast.
-     * @return True if the {@code caster} can cast upon {@code target}.
+     * @return {@code null} if the {@code caster} can cast upon {@code target}. An error message otherwise.
      */
-    public boolean checkAbilityValidity(final Minion caster, final Minion target) {
+    public String checkAbilityValidity(final Minion caster, final Minion target) {
         if (caster.getOwnerPlayerIdx() == target.getOwnerPlayerIdx()) {
-            IOHandler.getInstance().writeToObject("error",
-                    "Attacked card does not belong to the enemy.");
-            IOHandler.getInstance().writeObjectToOutput();
-            return false;
+            return "Attacked card does not belong to the enemy.";
         }
-        return true;
+        return null;
     }
 
     /**

@@ -2,7 +2,6 @@ package org.poo.game.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import org.poo.fileio.IOHandler;
 import org.poo.game.Game;
 import org.poo.game.cards.Card;
 import org.poo.game.cards.HeroCard;
@@ -112,38 +111,28 @@ public final class Hero extends Entity {
      *
      * @param row The row which will be affected by the hero's ability.
      * @param rowIdx The index of the row, used to check belonging to the hero.
+     * @return {@code null} if the ability was successfully used. An error message otherwise.
      */
-    public void useAbility(final Minion[] row, final int rowIdx) {
+    public String useAbility(final Minion[] row, final int rowIdx) {
         if (card.getMana() > this.mana) {
-            IOHandler.getInstance().writeToObject("error",
-                    "Not enough mana to use hero's ability.");
-            IOHandler.getInstance().writeObjectToOutput();
-            return;
+            return "Not enough mana to use hero's ability.";
         }
 
         if (!this.canAct) {
-            IOHandler.getInstance().writeToObject("error",
-                    "Hero has already attacked this turn.");
-            IOHandler.getInstance().writeObjectToOutput();
-            return;
+            return "Hero has already attacked this turn.";
         }
 
         if (((HeroCard) card).isAbilityAffectEnemy() && !isEnemyRow(rowIdx)) {
-            IOHandler.getInstance().writeToObject("error",
-                    "Selected row does not belong to the enemy.");
-            IOHandler.getInstance().writeObjectToOutput();
-            return;
+            return "Selected row does not belong to the enemy.";
         }
 
         if (!((HeroCard) card).isAbilityAffectEnemy() && isEnemyRow(rowIdx)) {
-            IOHandler.getInstance().writeToObject("error",
-                    "Selected row does not belong to the current player.");
-            IOHandler.getInstance().writeObjectToOutput();
-            return;
+            return "Selected row does not belong to the current player.";
         }
 
         addMana(-1 * card.getMana());
         ((HeroCard) card).useAbility(row);
         this.setCanAct(false);
+        return null;
     }
 }

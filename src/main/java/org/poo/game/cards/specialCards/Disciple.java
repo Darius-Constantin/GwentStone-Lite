@@ -1,6 +1,5 @@
 package org.poo.game.cards.specialCards;
 
-import org.poo.fileio.IOHandler;
 import org.poo.game.cards.CardType;
 import org.poo.game.cards.SpecialMinionCard;
 import org.poo.game.entities.Minion;
@@ -19,14 +18,11 @@ public final class Disciple extends SpecialMinionCard {
     }
 
     @Override
-    public boolean checkAbilityValidity(final Minion caster, final Minion target) {
+    public String checkAbilityValidity(final Minion caster, final Minion target) {
         if (caster.getOwnerPlayerIdx() != target.getOwnerPlayerIdx()) {
-            IOHandler.getInstance().writeToObject("error",
-                    "Attacked card does not belong to the current player.");
-            IOHandler.getInstance().writeObjectToOutput();
-            return false;
+            return "Attacked card does not belong to the current player.";
         }
-        return true;
+        return null;
     }
 
     @Override

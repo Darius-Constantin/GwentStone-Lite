@@ -1,32 +1,56 @@
-commit 91acc9dbac8ade6ba3f9574e69fe002b24fb60b1
+commit 4e7d00e5daf175eb49401b9764d8101458e43f6f
+Author: Darius Constantin <darius.constantin04@stud.acs.upb.ro>
+Date:   Sat Nov 16 16:12:26 2024 +0200
+
+    Cleaned up the code, refactored the files for a consistent style, and added javadocs to functions. Still need to manage hashmaps and eventually create a dispatcher class.
+    
+    Signed-off-by: Darius Constantin <darius.constantin04@stud.acs.upb.ro>
+
+commit 8ea66f94f6cf29455ba2d9aeaddd5f4d0b21167b
+Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+Date:   Fri Nov 15 17:32:18 2024 +0200
+
+    Repaired homework according to the points table: one class for each minion and hero. Thus, abilities and minions are no longer detached from one another. Still need to find a better way to construct hashmaps.
+    
+    Signed-off-by: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+
+commit afc4b6178cbfaac23df519d5cf6f5b1642e729d9
+Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+Date:   Mon Nov 11 02:15:59 2024 +0200
+
+    Finished migrating to Maven. Updated code to avoid using Java reflection and deleted the previous IOHandler. Need to add documentation and make a few amends.
+    
+    Signed-off-by: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
+
+commit 37ee62cf114d01d29cb759dd07475c437b39b2db
 Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
 Date:   Sun Nov 10 22:50:05 2024 +0200
 
-    Migration to Maven
+    Migrated to Maven as required by the POO team.
 
-commit f96e9873e528c5b8f45c382ab26b1aceda674834
+commit ca31cd644fe5a5a630488838b865846625892618
 Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
 Date:   Mon Nov 4 01:14:37 2024 +0200
 
-    Wild idea worked
+    Scrapped Commands enum and encapsulated each command in a function. Need to find a solution around using the gigantic switch statement that drives gameplay. Simplified IO handling by reducing repetitive calls to writing data.
 
-commit bab0ef90d2136b11f13768ac220f0326d5ad1b62
+commit 1df22ea48f9dd38a9ecd7285b25fe3554e0db52c
 Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
 Date:   Mon Nov 4 00:10:38 2024 +0200
 
-    wild attempt
+    Started fixing Checkstyle errors (mostly making final fields private instead of public, and naming conventions). Added a Commands enum with lambda so that I can call functions for each inputAction more easily. Finished reflexive IOHandler wrapper over Jackson.
 
-commit 7648f501c56b64513f4f49173f9a179fc3f3cd7f
+commit 3cbf0a6e22b30ebde4e073f67a39ac7e0c1c1d82
 Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
 Date:   Sun Nov 3 02:29:31 2024 +0200
 
-    Started refactoring IOHandler. Can create objects with reflexivity.
+    Started refactoring IOHandler and implementing my own annotations. Can create JSON objects with reflexivity, very useful in making flattened structures in nested objects.
 
-commit a67a38d17c0a9d56baf54ca623f48468faf53584
+commit 7bc4511f85d208ff27b0da318bd8f746f70bc5c1
 Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>
 Date:   Sat Nov 2 23:46:55 2024 +0200
 
-    Logic done, needs refactoring
+    Imported fixed tests. Implementation works and logic done, all tests pass. Card types are now more granular. Heavy refactoring is required in Game.java, as well as better encapsulation.
 
 commit 9cbe797d77dd09e6c9a13b0e5176df21a17a744e
 Author: Darius-Constantin <darius.constantin04@stud.acs.upb.ro>

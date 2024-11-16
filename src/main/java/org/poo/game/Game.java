@@ -309,7 +309,11 @@ public final class Game {
                         IOHandler.getInstance()
                                 .createNodeFromObject(action.getCardAttacked()));
 
-                attacker.attack(target);
+                String err = attacker.attack(target);
+                if (err != null) {
+                    IOHandler.getInstance().writeToObject("error", err);
+                    IOHandler.getInstance().writeObjectToOutput();
+                }
             }
         },
         CARD_USES_ABILITY("cardUsesAbility", CommandType.GAMEPLAY) {
@@ -326,7 +330,6 @@ public final class Game {
                         game.playedCards[cardAttacker.getX()][cardAttacker.getY()]
                                 .getCard()
                                 .getType();
-
 
                 if ((casterType.getAttributes() & CardType.SPECIAL) == 0b00000000) {
                     return;
@@ -348,7 +351,11 @@ public final class Game {
                         IOHandler.getInstance()
                                 .createNodeFromObject(action.getCardAttacked()));
 
-                caster.useAbility(target);
+                String err = caster.useAbility(target);
+                if (err != null) {
+                    IOHandler.getInstance().writeToObject("error", err);
+                    IOHandler.getInstance().writeObjectToOutput();
+                }
             }
         },
         USE_ATTACK_HERO("useAttackHero", CommandType.GAMEPLAY) {
@@ -367,7 +374,11 @@ public final class Game {
                         IOHandler.getInstance()
                                 .createNodeFromObject(action.getCardAttacker()));
 
-                attacker.attack(game.heroes[currentPlayerIdx == 0 ? 1 : 0]);
+                String err = attacker.attack(game.heroes[currentPlayerIdx == 0 ? 1 : 0]);
+                if (err != null) {
+                    IOHandler.getInstance().writeToObject("error", err);
+                    IOHandler.getInstance().writeObjectToOutput();
+                }
             }
         },
         USE_HERO_ABILITY("useHeroAbility", CommandType.GAMEPLAY) {
@@ -377,8 +388,12 @@ public final class Game {
                 IOHandler.getInstance().writeToObject("command", "useHeroAbility");
                 IOHandler.getInstance().writeToObject("affectedRow", action.getAffectedRow());
 
-                game.heroes[currentPlayerIdx].useAbility(game.playedCards[action.getAffectedRow()],
+                String err = game.heroes[currentPlayerIdx].useAbility(game.playedCards[action.getAffectedRow()],
                         action.getAffectedRow());
+                if (err != null) {
+                    IOHandler.getInstance().writeToObject("error", err);
+                    IOHandler.getInstance().writeObjectToOutput();
+                }
             }
         },
         END_PLAYER_TURN("endPlayerTurn", CommandType.GAMEPLAY) {

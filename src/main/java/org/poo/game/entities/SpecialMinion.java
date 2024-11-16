@@ -1,6 +1,5 @@
 package org.poo.game.entities;
 
-import org.poo.fileio.IOHandler;
 import org.poo.game.Game;
 import org.poo.game.cards.CardType;
 import org.poo.game.cards.SpecialMinionCard;
@@ -16,27 +15,28 @@ public final class SpecialMinion extends Minion {
      * fail (such as checking if the minion hasn't already acted this turn), the ability will not
      * be used.
      * @param target The target upon which the ability will be cast.
+     * @return {@code null} if the ability was successfully used. An error message otherwise.
      */
-    public void useAbility(final Minion target) {
-        if (this.canMinionAct()) {
-            return;
+    public String useAbility(final Minion target) {
+        String err = this.canMinionAct();
+        if (err != null) {
+            return err;
         }
 
-        if (!((SpecialMinionCard) this.card).checkAbilityValidity(this, target)) {
-            return;
+        err = ((SpecialMinionCard) this.card).checkAbilityValidity(this, target);
+        if (err != null) {
+            return err;
         }
 
         if (!((SpecialMinionCard) this.card).isAbilityIgnoresTaunt()) {
             if (this.currentGame.isTauntOnEnemySide()
                     && target.getCard().getType() != CardType.TAUNT) {
-                IOHandler.getInstance().writeToObject("error",
-                        "Attacked card is not of type 'Tank'.");
-                IOHandler.getInstance().writeObjectToOutput();
-                return;
+                return "Attacked card is not of type 'Tank'.";
             }
         }
 
         ((SpecialMinionCard) this.card).useAbility(this, target);
         this.setCanAct(false);
+        return null;
     }
 }

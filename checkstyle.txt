@@ -1,6 +1,8 @@
 Starting audit...
-[ERROR] C:\Users\nitro\Darius\Facultate\Semestrul 3\OOP\GwentStone-Lite\.\src\main\java\org\poo\game\cards\HeroCard.java:22:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\nitro\Darius\Facultate\Semestrul 3\OOP\GwentStone-Lite\.\src\main\java\org\poo\game\Game.java:36: Line is longer than 100 characters (found 104). [LineLength]
-[ERROR] C:\Users\nitro\Darius\Facultate\Semestrul 3\OOP\GwentStone-Lite\.\src\main\java\org\poo\game\Game.java:99: Line is longer than 100 characters (found 104). [LineLength]
+[ERROR] C:\Users\nitro\Darius\Facultate\Semestrul 3\OOP\Test\GwentStone-Lite\.\src\main\java\org\poo\game\cards\SpecialMinionCard.java:34: Line is longer than 100 characters (found 107). [LineLength]
+[ERROR] C:\Users\nitro\Darius\Facultate\Semestrul 3\OOP\Test\GwentStone-Lite\.\src\main\java\org\poo\game\entities\Minion.java:5:8: Unused import - org.poo.fileio.IOHandler. [UnusedImports]
+[ERROR] C:\Users\nitro\Darius\Facultate\Semestrul 3\OOP\Test\GwentStone-Lite\.\src\main\java\org\poo\game\Game.java:36: Line is longer than 100 characters (found 104). [LineLength]
+[ERROR] C:\Users\nitro\Darius\Facultate\Semestrul 3\OOP\Test\GwentStone-Lite\.\src\main\java\org\poo\game\Game.java:99: Line is longer than 100 characters (found 104). [LineLength]
+[ERROR] C:\Users\nitro\Darius\Facultate\Semestrul 3\OOP\Test\GwentStone-Lite\.\src\main\java\org\poo\game\Game.java:391: Line is longer than 100 characters (found 112). [LineLength]
 Audit done.
-Checkstyle ends with 3 errors.
+Checkstyle ends with 5 errors.
