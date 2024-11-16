@@ -8,7 +8,7 @@ import org.poo.game.Game;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Entity {
+public abstract class Entity {
     @Getter
     @Setter
     @JsonProperty("health")
@@ -18,6 +18,11 @@ public class Entity {
     @Setter
     @JsonIgnore
     protected boolean canAct = true;
+    /**
+     * All entities will base themselves of a card which will act as its template. To avoid storing
+     * multiple references to its attributes (e.g., {@code name}), we only store a reference to
+     * the card and access attributes using getters (e.g., {@link Card#getName()}.
+     */
     @Getter
     @JsonUnwrapped
     protected final Card card;
@@ -28,19 +33,25 @@ public class Entity {
     @JsonIgnore
     protected final int ownerPlayerIdx;
 
-    public Entity(final Card card,
-                  final Game currentGame,
-                  final int ownerPlayerIdx) {
+    public Entity(final Card card, final Game currentGame, final int ownerPlayerIdx) {
         this.card = card;
         this.health = card.getHealth();
         this.currentGame = currentGame;
         this.ownerPlayerIdx = ownerPlayerIdx;
     }
 
-    public void kill() {
-        currentGame.onEntityDeath(this);
-    }
+    /**
+     * A function for dealing with the death of an entity. Should primarily be used to notify
+     * dependant classes of its death.
+     */
+    public abstract void kill();
 
+    /**
+     * Function for taking damage by an entity that automatically triggers death on falling below
+     * 1 health points.
+     * @param damage The amount of damage taken by the entity, which will be subtracted from
+     * {@link #health}.
+     */
     public void takeDamage(final int damage) {
         this.health -= damage;
         if (this.health <= 0) {
@@ -48,6 +59,9 @@ public class Entity {
         }
     }
 
+    /**
+     * Default implementation for resetting an entity on the end of the current player's turn.
+     */
     public void reset() {
         this.canAct = true;
     }

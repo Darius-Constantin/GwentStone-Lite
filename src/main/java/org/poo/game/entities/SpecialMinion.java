@@ -5,30 +5,38 @@ import org.poo.game.Game;
 import org.poo.game.cards.CardType;
 import org.poo.game.cards.SpecialMinionCard;
 
-public class SpecialMinion extends Minion {
-    public SpecialMinion(SpecialMinionCard card, int x, int y, Game currentGame, int playerIdx) {
+public final class SpecialMinion extends Minion {
+    public SpecialMinion(final SpecialMinionCard card, final int x, final int y,
+                         final Game currentGame, final int playerIdx) {
         super(card, x, y, currentGame, playerIdx);
     }
 
-    public void useAbility(Minion target) {
-        if (this.hasMinionActed()) {
+    /**
+     * Function used to attempt to trigger the use of this minion's ability. If multiple checks
+     * fail (such as checking if the minion hasn't already acted this turn), the ability will not
+     * be used.
+     * @param target The target upon which the ability will be cast.
+     */
+    public void useAbility(final Minion target) {
+        if (this.canMinionAct()) {
             return;
         }
 
-        if (!((SpecialMinionCard)this.card).checkAbilityValidity(this, target)) {
+        if (!((SpecialMinionCard) this.card).checkAbilityValidity(this, target)) {
             return;
         }
 
-        if(!((SpecialMinionCard)this.card).isAbilityIgnoresTaunt()) {
-            if (this.currentGame.isTauntOnEnemySide() && target.getCard().getType() != CardType.TAUNT) {
-                IOHandler.INSTANCE.writeToObject("error",
+        if (!((SpecialMinionCard) this.card).isAbilityIgnoresTaunt()) {
+            if (this.currentGame.isTauntOnEnemySide()
+                    && target.getCard().getType() != CardType.TAUNT) {
+                IOHandler.getInstance().writeToObject("error",
                         "Attacked card is not of type 'Tank'.");
-                IOHandler.INSTANCE.writeObjectToOutput();
+                IOHandler.getInstance().writeObjectToOutput();
                 return;
             }
         }
 
-        ((SpecialMinionCard)this.card).useAbility(this, target);
+        ((SpecialMinionCard) this.card).useAbility(this, target);
         this.setCanAct(false);
     }
 }

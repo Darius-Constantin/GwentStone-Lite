@@ -24,80 +24,79 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Function;
 
-public class Session {
-    private final Player[] players = new Player[2];
-    private final ArrayList<GameInput> gamesInput;
-
-    private final static HashMap<String, Function<CardInput, MinionCard>> minionCardConstructor =
+public final class Session {
+    private static final HashMap<String, Function<CardInput, MinionCard>> MINION_CARD_CONSTRUCTOR =
             new HashMap<>();
-
-    private final static HashMap<String, Function<CardInput, HeroCard>> heroConstructor =
+    private static final HashMap<String, Function<CardInput, HeroCard>> HERO_CONSTRUCTOR =
             new HashMap<>();
 
     static {
-        minionCardConstructor.put("Sentinel",
-                (CardInput input) -> { return new Sentinel(input.getHealth(), input.getMana(),
+        MINION_CARD_CONSTRUCTOR.put("Sentinel",
+                (CardInput input) -> new Sentinel(input.getHealth(), input.getMana(),
                         input.getAttackDamage(), input.getDescription(), input.getColors(),
-                        input.getName()); });
-        minionCardConstructor.put("Berserker",
-                (CardInput input) -> { return new Berserker(input.getHealth(), input.getMana(),
+                        input.getName()));
+        MINION_CARD_CONSTRUCTOR.put("Berserker",
+                (CardInput input) -> new Berserker(input.getHealth(), input.getMana(),
                         input.getAttackDamage(), input.getDescription(), input.getColors(),
-                        input.getName()); });
-        minionCardConstructor.put("Goliath",
-                (CardInput input) -> { return new Goliath(input.getHealth(), input.getMana(),
+                        input.getName()));
+        MINION_CARD_CONSTRUCTOR.put("Goliath",
+                (CardInput input) -> new Goliath(input.getHealth(), input.getMana(),
                         input.getAttackDamage(), input.getDescription(), input.getColors(),
-                        input.getName()); });
-        minionCardConstructor.put("Warden",
-                (CardInput input) -> { return new Warden(input.getHealth(), input.getMana(),
+                        input.getName()));
+        MINION_CARD_CONSTRUCTOR.put("Warden",
+                (CardInput input) -> new Warden(input.getHealth(), input.getMana(),
                         input.getAttackDamage(), input.getDescription(), input.getColors(),
-                        input.getName()); });
-        minionCardConstructor.put("The Ripper",
-                (CardInput input) -> { return new TheRipper(input.getHealth(), input.getMana(),
+                        input.getName()));
+        MINION_CARD_CONSTRUCTOR.put("The Ripper",
+                (CardInput input) -> new TheRipper(input.getHealth(), input.getMana(),
                         input.getAttackDamage(), input.getDescription(), input.getColors(),
-                        input.getName()); });
-        minionCardConstructor.put("Miraj",
-                (CardInput input) -> { return new Miraj(input.getHealth(), input.getMana(),
+                        input.getName()));
+        MINION_CARD_CONSTRUCTOR.put("Miraj",
+                (CardInput input) -> new Miraj(input.getHealth(), input.getMana(),
                         input.getAttackDamage(), input.getDescription(), input.getColors(),
-                        input.getName()); });
-        minionCardConstructor.put("The Cursed One",
-                (CardInput input) -> { return new TheCursedOne(input.getHealth(), input.getMana(),
+                        input.getName()));
+        MINION_CARD_CONSTRUCTOR.put("The Cursed One",
+                (CardInput input) -> new TheCursedOne(input.getHealth(), input.getMana(),
                         input.getAttackDamage(), input.getDescription(), input.getColors(),
-                        input.getName()); });
-        minionCardConstructor.put("Disciple",
-                (CardInput input) -> { return new Disciple(input.getHealth(), input.getMana(),
+                        input.getName()));
+        MINION_CARD_CONSTRUCTOR.put("Disciple",
+                (CardInput input) -> new Disciple(input.getHealth(), input.getMana(),
                         input.getAttackDamage(), input.getDescription(), input.getColors(),
-                        input.getName()); });
+                        input.getName()));
 
-        heroConstructor.put("Lord Royce",
-                (CardInput input) -> { return new LordRoyce(input.getMana(),
-                        input.getDescription(), input.getColors(), input.getName()); });
-        heroConstructor.put("Empress Thorina",
-                (CardInput input) -> { return new EmpressThorina(input.getMana(),
-                        input.getDescription(), input.getColors(), input.getName()); });
-        heroConstructor.put("King Mudface",
-                (CardInput input) -> { return new KingMudface(input.getMana(),
-                        input.getDescription(), input.getColors(), input.getName()); });
-        heroConstructor.put("General Kocioraw",
-                (CardInput input) -> { return new GeneralKocioraw(input.getMana(),
-                        input.getDescription(), input.getColors(), input.getName()); });
+        HERO_CONSTRUCTOR.put("Lord Royce",
+                (CardInput input) -> new LordRoyce(input.getMana(),
+                        input.getDescription(), input.getColors(), input.getName()));
+        HERO_CONSTRUCTOR.put("Empress Thorina",
+                (CardInput input) -> new EmpressThorina(input.getMana(),
+                        input.getDescription(), input.getColors(), input.getName()));
+        HERO_CONSTRUCTOR.put("King Mudface",
+                (CardInput input) -> new KingMudface(input.getMana(),
+                        input.getDescription(), input.getColors(), input.getName()));
+        HERO_CONSTRUCTOR.put("General Kocioraw",
+                (CardInput input) -> new GeneralKocioraw(input.getMana(),
+                        input.getDescription(), input.getColors(), input.getName()));
     }
 
-    public void addPlayerWin(final int playerIdx) {
-        players[playerIdx].addWin();
-    }
+    private final Player[] players = new Player[2];
+    private final ArrayList<GameInput> gamesInput;
 
-    public int getPlayerWins(final int playerIdx) {
-        return players[playerIdx].getNoOfWins();
-    }
-
-    public Session(final DecksInput inputPlayer1Decks,
-                   final DecksInput inputPlayer2Decks,
+    /**
+     * Constructor to begin a Gwentstone session consisting of one or multiple games between
+     * players with multiple possible decks.
+     *
+     * @param inputPlayer1Decks The available decks of the first player.
+     * @param inputPlayer2Decks The available decks of the second player.
+     * @param gamesInput        The input of the games which follow to be played.
+     */
+    public Session(final DecksInput inputPlayer1Decks, final DecksInput inputPlayer2Decks,
                    final ArrayList<GameInput> gamesInput) {
         ArrayList<ArrayList<MinionCard>> player1Decks = new ArrayList<>();
         for (ArrayList<CardInput> deck : inputPlayer1Decks.getDecks()) {
             player1Decks.add(new ArrayList<>());
             for (CardInput cardInput : deck) {
-                player1Decks.getLast().add(minionCardConstructor.get(cardInput.getName()).apply(cardInput));
+                player1Decks.getLast().add(MINION_CARD_CONSTRUCTOR.get(cardInput.getName())
+                        .apply(cardInput));
             }
         }
         players[0] = new Player(player1Decks);
@@ -106,20 +105,43 @@ public class Session {
         for (ArrayList<CardInput> deck : inputPlayer2Decks.getDecks()) {
             player2Decks.add(new ArrayList<>());
             for (CardInput cardInput : deck) {
-                player2Decks.getLast().add(minionCardConstructor.get(cardInput.getName()).apply(cardInput));
+                player2Decks.getLast().add(MINION_CARD_CONSTRUCTOR.get(cardInput.getName())
+                        .apply(cardInput));
             }
         }
         players[1] = new Player(player2Decks);
         this.gamesInput = gamesInput;
     }
 
-    public void beginSession() throws IllegalAccessException {
+    /**
+     * Upon the win of a player by the death of the enemy, use this function to increment
+     * @param playerIdx The index of the player whose wins counter will be incremented.
+     */
+    public void incrementPlayerWins(final int playerIdx) {
+        players[playerIdx].addWin();
+    }
+
+    /**
+     * Function used to retrieve the wins counter of a player.
+     * @param playerIdx The index of the player whose wins counter is requested.
+     * @return The number of wins for the supplied player.
+     */
+    public int getPlayerWins(final int playerIdx) {
+        return players[playerIdx].getNoOfWins();
+    }
+
+    /**
+     * Once a session has been established, call this function to begin playing each game
+     * sequentially. In between constructing the session and beginning it, additional set up can
+     * be done if required.
+     */
+    public void beginSession() {
         for (GameInput gameInput : gamesInput) {
             CardInput tmpHero = gameInput.getStartGame().getPlayerOneHero();
-            Card player1HeroCard = heroConstructor.get(tmpHero.getName()).apply(tmpHero);
+            Card player1HeroCard = HERO_CONSTRUCTOR.get(tmpHero.getName()).apply(tmpHero);
 
             tmpHero = gameInput.getStartGame().getPlayerTwoHero();
-            Card player2HeroCard = heroConstructor.get(tmpHero.getName()).apply(tmpHero);
+            Card player2HeroCard = HERO_CONSTRUCTOR.get(tmpHero.getName()).apply(tmpHero);
 
             Game currentGame = new Game(this,
                     gameInput.getStartGame().getShuffleSeed(),

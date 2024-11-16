@@ -7,11 +7,12 @@ import java.util.ArrayList;
 
 public class Goliath extends MinionCard {
 
-    public Goliath(int health, int mana, int attackDamage, String description, ArrayList<String> colors, String name) {
+    public Goliath(final int health, final int mana, final int attackDamage,
+                   final String description, final ArrayList<String> colors, final String name) {
         super(health, mana, attackDamage, description, colors, name, CardType.TAUNT);
     }
 
-    public Goliath(MinionCard card) {
+    public Goliath(final MinionCard card) {
         super(card);
     }
 }

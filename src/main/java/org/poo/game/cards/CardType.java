@@ -10,11 +10,11 @@ public enum CardType {
     SPECIAL_BACKLINE((byte) (CardType.BACKLINER | CardType.SPECIAL)),
     HERO(CardType.NO_CHECK);
 
-    public final static byte NO_CHECK = (byte) ~0;
-    public final static byte BACKLINER = 0b00000000;
-    public final static byte FRONTLINER = 0b00000001;
-    public final static byte TAUNTER = 0b00000010;
-    public final static byte SPECIAL = 0b00000100;
+    public static final byte NO_CHECK = (byte) ~0;
+    public static final byte BACKLINER = 0b00000000;
+    public static final byte FRONTLINER = 0b00000001;
+    public static final byte TAUNTER = 0b00000010;
+    public static final byte SPECIAL = 0b00000100;
     private final byte attributes;
 
     CardType(final byte attributes) {

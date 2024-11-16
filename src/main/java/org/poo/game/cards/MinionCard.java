@@ -10,12 +10,8 @@ public abstract class MinionCard extends Card {
     @JsonProperty("attackDamage")
     private final int attackDamage;
 
-    public MinionCard(final int health,
-                      final int mana,
-                      final int attackDamage,
-                      final String description,
-                      final ArrayList<String> colors,
-                      final String name,
+    public MinionCard(final int health, final int mana, final int attackDamage,
+                      final String description, final ArrayList<String> colors, final String name,
                       final CardType type) {
         super(health, mana, description, colors, name, type);
         this.attackDamage = attackDamage;

@@ -12,26 +12,43 @@ public abstract class SpecialMinionCard extends MinionCard {
     @JsonIgnore
     protected final boolean abilityIgnoresTaunt;
 
-    public SpecialMinionCard(int health, int mana, int attackDamage, String description,
-                             ArrayList<String> colors, String name, CardType type, final boolean abilityIgnoresTaunt) {
+    public SpecialMinionCard(final int health, final int mana, final int attackDamage,
+                             final String description, final ArrayList<String> colors,
+                             final String name, final CardType type,
+                             final boolean abilityIgnoresTaunt) {
         super(health, mana, attackDamage, description, colors, name, type);
         this.abilityIgnoresTaunt = abilityIgnoresTaunt;
     }
 
-    public SpecialMinionCard(SpecialMinionCard card) {
+    public SpecialMinionCard(final SpecialMinionCard card) {
         super(card);
         this.abilityIgnoresTaunt = card.abilityIgnoresTaunt;
     }
 
+    /**
+     * Function used to check if this minion's ability can be cast upon its target. By default,
+     * both minions must not be part of the same team. Must be overridden in the case of minions
+     * whose abilities are applied on allies (such as
+     * {@link org.poo.game.cards.specialCards.Disciple}).
+     * @param caster The minion that attempts to cast the ability.
+     * @param target The minion upon which the ability will be cast.
+     * @return True if the {@code caster} can cast upon {@code target}.
+     */
     public boolean checkAbilityValidity(final Minion caster, final Minion target) {
         if (caster.getOwnerPlayerIdx() == target.getOwnerPlayerIdx()) {
-            IOHandler.INSTANCE.writeToObject("error",
+            IOHandler.getInstance().writeToObject("error",
                     "Attacked card does not belong to the enemy.");
-            IOHandler.INSTANCE.writeObjectToOutput();
+            IOHandler.getInstance().writeObjectToOutput();
             return false;
         }
         return true;
     }
 
-    public abstract void useAbility(final Minion caster, final Minion target);
+    /**
+     * This function needs to be overridden for each SpecialMinionCard to determine the behaviour
+     * of its ability.
+     * @param caster The minion that attempts to cast the ability.
+     * @param target The minion upon which the ability will be cast.
+     */
+    public abstract void useAbility(Minion caster, Minion target);
 }

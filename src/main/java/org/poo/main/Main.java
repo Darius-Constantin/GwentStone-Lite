@@ -29,7 +29,7 @@ public final class Main {
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */
-    public static void main(final String[] args) throws IOException, IllegalAccessException {
+    public static void main(final String[] args) throws IOException {
         File directory = new File(CheckerConstants.TESTS_PATH);
         Path path = Paths.get(CheckerConstants.RESULT_PATH);
 
@@ -43,14 +43,12 @@ public final class Main {
         Files.createDirectories(path);
 
         for (File file : Objects.requireNonNull(directory.listFiles())) {
-            //if (file.getName().equals("test07_use_card_ability_invalid.json")) {
                 String filepath = CheckerConstants.OUT_PATH + file.getName();
                 File out = new File(filepath);
                 boolean isCreated = out.createNewFile();
                 if (isCreated) {
                     action(file.getName(), filepath);
                 }
-            //}
         }
 
         Checker.calculateScore();
@@ -62,12 +60,12 @@ public final class Main {
      * @throws IOException in case of exceptions to reading / writing
      */
     public static void action(final String filePath1,
-                              final String filePath2) throws IOException, IllegalAccessException {
-        IOHandler.INSTANCE.handleInput(CheckerConstants.TESTS_PATH + filePath1);
-        Session session = new Session(IOHandler.INSTANCE.getInputData().getPlayerOneDecks(),
-                IOHandler.INSTANCE.getInputData().getPlayerTwoDecks(),
-                IOHandler.INSTANCE.getInputData().getGames());
+                              final String filePath2) throws IOException {
+        IOHandler.getInstance().handleInput(CheckerConstants.TESTS_PATH + filePath1);
+        Session session = new Session(IOHandler.getInstance().getInputData().getPlayerOneDecks(),
+                IOHandler.getInstance().getInputData().getPlayerTwoDecks(),
+                IOHandler.getInstance().getInputData().getGames());
         session.beginSession();
-        IOHandler.INSTANCE.handleOutput(filePath2);
+        IOHandler.getInstance().handleOutput(filePath2);
     }
 }

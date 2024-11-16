@@ -21,10 +21,7 @@ public class Minion extends Entity {
     @JsonProperty("attackDamage")
     protected int attackDamage;
 
-    public Minion(final MinionCard card,
-                  final int x,
-                  final int y,
-                  final Game currentGame,
+    public Minion(final MinionCard card, final int x, final int y, final Game currentGame,
                   final int playerIdx) {
         super(card, currentGame, playerIdx);
         this.attackDamage = card.getAttackDamage();
@@ -32,49 +29,76 @@ public class Minion extends Entity {
         this.y = y;
     }
 
-    public void dealDamage(final Entity target) {
-        target.takeDamage(getAttackDamage());
+    /**
+     * Function that notifies the game that this minion has died.
+     */
+    @Override
+    public final void kill() {
+        currentGame.onMinionDeath(this);
     }
 
+    /**
+     * Opposite function of {@link Entity#takeDamage(int)} in the sense that it will force a given
+     * target to take damage equal to {@link #attackDamage}.
+     * @param target The target which will be damaged.
+     */
+    public final void dealDamage(final Entity target) {
+        target.takeDamage(attackDamage);
+    }
+
+    /**
+     * Function to reset the state of a minion by unfreezing and allowing it to act again next turn.
+     */
     @Override
-    public void reset() {
+    public final void reset() {
         this.canAct = true;
         this.frozen = false;
     }
 
-    public boolean hasMinionActed() {
+    /**
+     * Function to determine if this minion can act. A minion can act only if it hasn't already
+     * acted this turn and if it is not frozen.
+     * @return True if the minion can act. False otherwise.
+     */
+    public final boolean canMinionAct() {
         if (!this.isCanAct()) {
-            IOHandler.INSTANCE.writeToObject("error",
+            IOHandler.getInstance().writeToObject("error",
                     "Attacker card has already attacked this turn.");
-            IOHandler.INSTANCE.writeObjectToOutput();
+            IOHandler.getInstance().writeObjectToOutput();
             return true;
         }
 
         if (this.isFrozen()) {
-            IOHandler.INSTANCE.writeToObject("error",
+            IOHandler.getInstance().writeToObject("error",
                     "Attacker card is frozen.");
-            IOHandler.INSTANCE.writeObjectToOutput();
+            IOHandler.getInstance().writeObjectToOutput();
             return true;
         }
 
         return false;
     }
 
-    public void attack(final Entity target) {
+    /**
+     * Function used to attempt to attack a minion. If multiple checks fail (such as checking if
+     * the minion hasn't already acted this turn), the attack will not be triggered.
+     * @param target The target of the attack who might take damage.
+     */
+    public final void attack(final Entity target) {
         if (this.getOwnerPlayerIdx() == target.getOwnerPlayerIdx()) {
-            IOHandler.INSTANCE.writeToObject("error",
+            IOHandler.getInstance().writeToObject("error",
                     "Attacked card does not belong to the enemy.");
-            IOHandler.INSTANCE.writeObjectToOutput();
+            IOHandler.getInstance().writeObjectToOutput();
             return;
         }
 
-        if (this.hasMinionActed())
+        if (this.canMinionAct()) {
             return;
+        }
 
         if (currentGame.isTauntOnEnemySide() && target.getCard().getType() != CardType.TAUNT) {
-            IOHandler.INSTANCE.writeToObject("error",
+            IOHandler.getInstance().writeToObject("error",
                     "Attacked card is not of type 'Tank'.");
-            IOHandler.INSTANCE.writeObjectToOutput();
+            IOHandler.getInstance().writeObjectToOutput();
             return;
         }
 

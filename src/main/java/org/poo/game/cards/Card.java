@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @Getter
 public abstract class Card {
@@ -22,12 +21,8 @@ public abstract class Card {
     @JsonIgnore
     protected final CardType type;
 
-    public Card(final int health,
-                final int mana,
-                final String description,
-                final ArrayList<String> colors,
-                final String name,
-                final CardType type) {
+    public Card(final int health, final int mana, final String description,
+                final ArrayList<String> colors, final String name, final CardType type) {
         this.health = health;
         this.mana = mana;
         this.description = description;

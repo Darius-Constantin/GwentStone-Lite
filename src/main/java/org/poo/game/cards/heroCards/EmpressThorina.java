@@ -6,13 +6,14 @@ import org.poo.game.entities.Minion;
 
 import java.util.ArrayList;
 
-public class EmpressThorina extends HeroCard {
-    public EmpressThorina(int mana, String description, ArrayList<String> colors, String name) {
+public final class EmpressThorina extends HeroCard {
+    public EmpressThorina(final int mana, final String description, final ArrayList<String> colors,
+                          final String name) {
         super(mana, description, colors, name, true);
     }
 
     @Override
-    public void useAbility(Minion[] row) {
+    public void useAbility(final Minion[] row) {
         Minion maxHealthMinion = null;
         int maxHealth = 0;
         for (int i = 0; i < Game.TABLE_WIDTH; i++) {

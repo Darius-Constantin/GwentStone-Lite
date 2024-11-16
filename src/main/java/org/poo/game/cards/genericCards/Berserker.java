@@ -6,11 +6,12 @@ import org.poo.game.cards.MinionCard;
 import java.util.ArrayList;
 
 public class Berserker extends MinionCard {
-    public Berserker(int health, int mana, int attackDamage, String description, ArrayList<String> colors, String name) {
+    public Berserker(final int health, final int mana, final int attackDamage,
+                     final String description, final ArrayList<String> colors, final String name) {
         super(health, mana, attackDamage, description, colors, name, CardType.GENERIC);
     }
 
-    public Berserker(MinionCard card) {
+    public Berserker(final MinionCard card) {
         super(card);
     }
 }

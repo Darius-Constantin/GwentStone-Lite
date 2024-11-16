@@ -7,11 +7,12 @@ import java.util.ArrayList;
 
 public class Warden extends MinionCard {
 
-    public Warden(int health, int mana, int attackDamage, String description, ArrayList<String> colors, String name) {
+    public Warden(final int health, final int mana, final int attackDamage,
+                  final String description, final ArrayList<String> colors, final String name) {
         super(health, mana, attackDamage, description, colors, name, CardType.TAUNT);
     }
 
-    public Warden(MinionCard card) {
+    public Warden(final MinionCard card) {
         super(card);
     }
 }

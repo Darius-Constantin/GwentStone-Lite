@@ -6,10 +6,13 @@ import lombok.Getter;
 import java.util.ArrayList;
 
 @Getter
-public class Player {
+public final class Player {
     private final ArrayList<ArrayList<MinionCard>> decks;
     private int noOfWins = 0;
 
+    /**
+     * Function used to increment the {@link #noOfWins} for this player.
+     */
     public void addWin() {
         noOfWins++;
     }
