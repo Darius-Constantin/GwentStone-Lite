@@ -2,7 +2,6 @@ package org.poo.game.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.poo.fileio.IOHandler;
 import org.poo.game.cards.CardType;
 import org.poo.game.cards.MinionCard;
 import org.poo.game.Game;
@@ -11,7 +10,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class Minion extends Entity {
+public class Minion extends Entity<Minion> {
     @JsonIgnore
     private final int x;
     @JsonIgnore
@@ -34,7 +33,8 @@ public class Minion extends Entity {
      */
     @Override
     public final void kill() {
-        currentGame.onMinionDeath(this);
+        //currentGame.onMinionDeath(this);
+        deathDispatcher.dispatch(this);
     }
 
     /**

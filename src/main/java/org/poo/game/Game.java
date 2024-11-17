@@ -109,6 +109,8 @@ public final class Game {
         heroes[1] = new Hero(player2HeroCard,
                 shuffleDeck(player2Deck, seed), this, 1);
         this.actions = actions;
+        heroes[0].getDeathDispatcher().register(this::onHeroDeath);
+        heroes[1].getDeathDispatcher().register(this::onHeroDeath);
     }
 
     /**
@@ -185,14 +187,12 @@ public final class Game {
 
     /**
      * Function called by any hero after its death to update the state of the game (mark it as
-     * over). There is no need to pass the hero as an argument, because never does it happen that
-     * a player will kill their hero, thus it is always the opposite hero of the current player that
-     * dies.
+     * over).
      */
-    public void onHeroDeath() {
+    public void onHeroDeath(final Hero hero) {
         IOHandler.getInstance().beginObject();
         IOHandler.getInstance().writeToObject("gameEnded",
-                "Player " + (getCurrentPlayerIdx() == 0 ? "one" : "two")
+                "Player " + (hero.getPlayerIdx() == 1 ? "one" : "two")
                         + " killed the enemy hero.");
         IOHandler.getInstance().writeObjectToOutput();
         IOHandler.getInstance().endObject();
@@ -284,6 +284,7 @@ public final class Game {
                 Minion minion =
                         MINION_CONSTRUCTOR.get(cardToPlace.getName())
                                 .apply(new Quintet<>(cardToPlace, x, y, game, currentPlayerIdx));
+                minion.getDeathDispatcher().register(game::onMinionDeath);
                 game.heroes[currentPlayerIdx].addMana(-cardToPlace.getMana());
                 game.playedCards[x][y] = minion;
                 game.heroes[currentPlayerIdx].removeCard(action.getHandIdx());

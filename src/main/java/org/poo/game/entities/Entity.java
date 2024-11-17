@@ -7,8 +7,9 @@ import org.poo.game.cards.Card;
 import org.poo.game.Game;
 import lombok.Getter;
 import lombok.Setter;
+import org.poo.utils.Dispatcher;
 
-public abstract class Entity {
+public abstract class Entity<T extends Entity<T>> {
     @Getter
     @Setter
     @JsonProperty("health")
@@ -32,6 +33,10 @@ public abstract class Entity {
     @Getter
     @JsonIgnore
     protected final int ownerPlayerIdx;
+
+    @Getter
+    @JsonIgnore
+    protected Dispatcher<T> deathDispatcher = new Dispatcher<>();
 
     public Entity(final Card card, final Game currentGame, final int ownerPlayerIdx) {
         this.card = card;

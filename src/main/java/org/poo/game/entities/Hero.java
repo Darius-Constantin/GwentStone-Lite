@@ -10,7 +10,7 @@ import org.poo.game.cards.MinionCard;
 import java.util.ArrayList;
 
 @Getter
-public final class Hero extends Entity {
+public final class Hero extends Entity<Hero> {
     @JsonIgnore
     private final ArrayList<MinionCard> availableCards;
     @JsonIgnore
@@ -33,7 +33,8 @@ public final class Hero extends Entity {
      */
     @Override
     public void kill() {
-        currentGame.onHeroDeath();
+        //currentGame.onHeroDeath();
+        deathDispatcher.dispatch(this);
     }
 
     /**
